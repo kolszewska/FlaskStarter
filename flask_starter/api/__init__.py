@@ -1,16 +1,19 @@
+"""Module responsible for defining API."""
 import os
+from typing import Any
 
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
 from flask_starter.database.configuration import register_db_functions
+from flask_starter.api.auth.service import auth_blue_print
 
 
-def create_app(test_config=None):
+def create_app(test_config=None) -> Any:
     """Create and configure application."""
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'flask_starter.sqlite')
     )
 
     if test_config is None:
@@ -23,7 +26,7 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    register_db_functions(app)
+    app.register_blueprint(auth_blue_print)
 
     @app.route('/hello')
     def hello():

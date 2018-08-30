@@ -1,3 +1,4 @@
+"""Module responsible for definition of application."""
 from flask_starter.api import create_app
 
 if __name__ == '__main__':
