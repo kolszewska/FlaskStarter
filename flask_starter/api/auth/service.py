@@ -1,9 +1,6 @@
 """Module responsible for definition of Auth service."""
-
-import functools
-
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, flash, redirect, render_template, request, url_for
 )
 
 from flask_starter.api.auth.forms import RegistrationForm
@@ -22,5 +19,13 @@ def register():
         user = get_user_with_username(username)
         if user is None:
             add_user(username, email)
+            return redirect(url_for('auth.login'))
         else:
             flash('User with {} username already exists!'.format(username))
+
+    return render_template('auth/register.html')
+
+
+@auth_blue_print.route('/login', methods=['POST'])
+def login():
+    pass
