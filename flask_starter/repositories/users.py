@@ -4,12 +4,13 @@ from flask_starter.database import db_session
 from flask_starter.database.models import User
 
 
-def add_user(username: str, email: str) -> None:
+def add_user(username: str, email: str) -> int:
     """Add new User to database."""
     with db_session() as session:
         user = User(username=username, email=email)
         session.add(user)
         session.commit()
+    return user.id
 
 
 def get_user_by_username(username: str) -> User:

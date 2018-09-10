@@ -1,31 +1,23 @@
 """Module responsible for definition of Auth service."""
-from flask import (
-    Blueprint, flash, redirect, render_template, request, url_for
-)
+from flask import request
 
-from flask_starter.api.auth.forms import RegistrationForm
-from flask_starter.api.auth.business import get_user_with_username, add_user
+from flask_restplus import Resource
 
-auth_blue_print = Blueprint('auth', __name__, url_prefix='/auth')
+from flask_starter.api import api
+from flask_starter.api.auth.serializers import new_user
+from flask_starter.api.auth.business import add_user
 
-
-@auth_blue_print.route('/register', methods=['POST'])
-def register():
-    """Endpoint for user registration."""
-    registration_form = RegistrationForm(request.form)
-    if registration_form.validate():
-        username = request.form['username']
-        email = request.form['email']
-        user = get_user_with_username(username)
-        if user is None:
-            add_user(username, email)
-            return redirect(url_for('auth.login'))
-        else:
-            flash('User with {} username already exists!'.format(username))
-
-    return render_template('auth/register.html')
+auth_ns = api.namespace('auth', description='Operations related to authorization.')
 
 
-@auth_blue_print.route('/login', methods=['POST'])
-def login():
-    pass
+@auth_ns.route('/register')
+class Register(Resource):
+
+    @staticmethod
+    @api.response(201, 'User was successfully created.')
+    @api.expect(new_user)
+    def post():
+        """Endpoint for User registration."""
+        user = request.json
+        user_id = add_user(user)
+        return user_id, 201
