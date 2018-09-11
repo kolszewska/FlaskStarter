@@ -15,4 +15,4 @@ def add_user(username: str, email: str) -> int:
 
 def get_user_by_username(username: str) -> User:
     """Get User for given username."""
-    return User.query.filter_by(username=username).one()
+    return User.query.filter_by(username=username).first()
