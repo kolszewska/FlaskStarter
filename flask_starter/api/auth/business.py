@@ -3,9 +3,13 @@ from flask_starter.database.models import User
 import flask_starter.repositories.users as users_repository
 
 
-def add_user(username: str, email: str) -> None:
+def add_user(username: str, email: str, password: str) -> int:
     """Add new user."""
-    users_repository.add_user(username, email)
+    u = get_user_with_username(username)
+    if not u:
+        return users_repository.add_user(username, email)
+    else:
+        raise Exception
 
 
 def get_user_with_username(username: str) -> User:
