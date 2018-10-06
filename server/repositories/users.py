@@ -1,7 +1,7 @@
 """Module responsible for definition of UserRepository."""
-from flask_starter.database import db_session
+from server.database import db_session
 
-from flask_starter.database.models import User
+from server.database.models import User
 
 
 def add_user(username: str, email: str) -> int:

@@ -1,10 +1,10 @@
 """Module responsible for defining API."""
 from flask import Flask, Blueprint
 
-from flask_starter.config import Config
-from flask_starter.database import session, init_db
-from flask_starter.api.auth.service import auth_ns
-from flask_starter.api import api
+from server.config import Config
+from server.database import session, init_db
+from server.api.auth.service import auth_ns
+from server.api import api
 
 # Definition of application
 app = Flask(__name__)

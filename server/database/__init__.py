@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker, Session
 from sqlalchemy.ext.declarative import declarative_base
 
-from flask_starter.config import Config
+from server.config import Config
 
 engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
 session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
@@ -27,5 +27,5 @@ def db_session() -> Generator[Session, None, None]:
 
 def init_db():
     """Initialize database."""
-    import flask_starter.database.models
+    import server.database.models
     Base.metadata.create_all(bind=engine)

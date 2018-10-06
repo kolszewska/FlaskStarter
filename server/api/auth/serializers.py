@@ -1,7 +1,7 @@
 """Module defining serializers for authorization."""
 from flask_restplus import fields
 
-from flask_starter.api import api
+from server.api import api
 
 new_user = api.model('User', {
     'username': fields.String(required=True),

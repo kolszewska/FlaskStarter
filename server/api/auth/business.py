@@ -1,6 +1,6 @@
 """Module responsible for business logic for all Auth endpoints."""
-from flask_starter.database.models import User
-import flask_starter.repositories.users as users_repository
+from server.database.models import User
+import server.repositories.users as users_repository
 
 
 def add_user(username: str, email: str, password: str) -> int:
