@@ -1,6 +1,6 @@
 """Module responsible for business logic for all Auth endpoints."""
-from server.database.models import User
-import server.repositories.users as users_repository
+from backend.database.models import User
+import backend.repositories.users as users_repository
 
 
 def add_user(username: str, email: str, password: str) -> int:

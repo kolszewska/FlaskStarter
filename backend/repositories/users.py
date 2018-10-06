@@ -1,7 +1,7 @@
 """Module responsible for definition of UserRepository."""
-from server.database import db_session
+from backend.database import db_session
 
-from server.database.models import User
+from backend.database.models import User
 
 
 def add_user(username: str, email: str) -> int:

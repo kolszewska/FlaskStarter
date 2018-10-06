@@ -1,7 +1,7 @@
 """Module responsible for defining all relational database models."""
 from sqlalchemy import Column, Integer, String
 
-from server.database import Base
+from backend.database import Base
 
 
 class User(Base):
