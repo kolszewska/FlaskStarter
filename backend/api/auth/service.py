@@ -3,9 +3,9 @@ from flask import request
 
 from flask_restplus import Resource
 
-from flask_starter.api import api
-from flask_starter.api.auth.serializers import new_user
-from flask_starter.api.auth.business import add_user
+from backend.api import api
+from backend.api.auth.serializers import new_user
+from backend.api.auth.business import add_user
 
 auth_ns = api.namespace('auth', description='Operations related to authorization.')
 
