@@ -4,6 +4,7 @@ from flask import Flask, Blueprint
 from backend.config import Config
 from backend.database import session, init_db
 from backend.api.auth.service import auth_ns
+from backend.api.users.service import users_ns
 from backend.api import api
 
 # Definition of application
@@ -20,6 +21,7 @@ def initialize_app(flask_app):
 
     # Add namespaces
     api.add_namespace(auth_ns)
+    api.add_namespace(users_ns)
 
     flask_app.register_blueprint(blueprint)
 

@@ -8,4 +8,5 @@ class Config(object):
     """Application configuration."""
     SECRET_KEY = 'secret'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(base_dir, 'app.db')
+    SQLALCHEMY_DATABASE_URI
     SQLALCHEMY_TRACK_MODIFICATIONS = False

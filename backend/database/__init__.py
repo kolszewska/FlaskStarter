@@ -29,3 +29,4 @@ def init_db():
     """Initialize database."""
     import backend.database.models
     Base.metadata.create_all(bind=engine)
+

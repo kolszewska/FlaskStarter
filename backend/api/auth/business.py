@@ -3,8 +3,8 @@ from backend.database.models import User
 import backend.repositories.users as users_repository
 
 
-def add_user(username: str, email: str, password: str) -> int:
-    """Add new user."""
+def add_user(username: str, email: str) -> int:
+    """Add new users."""
     u = get_user_with_username(username)
     if not u:
         return users_repository.add_user(username, email)
@@ -13,5 +13,5 @@ def add_user(username: str, email: str, password: str) -> int:
 
 
 def get_user_with_username(username: str) -> User:
-    """"Get user for given username and return it."""
+    """"Get users for given username and return it."""
     return users_repository.get_user_by_username(username)
