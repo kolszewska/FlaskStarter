@@ -1,7 +1,8 @@
 """Module responsible for defining API."""
+import os
+
 from flask import Flask, Blueprint
 
-from backend.config import Config
 from backend.database import session, init_db
 from backend.api.auth.service import auth_ns
 from backend.api.users.service import users_ns
@@ -11,7 +12,7 @@ from backend.api import api
 app = Flask(__name__)
 
 # Use configuration file
-app.config.from_object(Config)
+app.config.SECRET_KEY = os.environ.get('RESOURCE_MANAGER_SECRET_KEY')
 
 
 def initialize_app(flask_app):
