@@ -8,6 +8,7 @@ run_rest:
 	. ./dev_configuration.sh && PYTHONPATH=`pwd` $(PYTHON) backend/api/rest.py
 
 run_tests:
-	. ./test_configuration.sh && PYTHONPATH=`pwd` $(PYTHON) -m pytest backend/tests/
+	rm -f `pwd`/test_app.db
+	. ./test_configuration.sh && PYTHONPATH=`pwd` $(PYTHON) -m pytest -v backend/tests/
 
 .PHONY: venv run_rest run_tests
