@@ -8,14 +8,16 @@ class User(Base):
     """Defines model for the User."""
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
-    username = Column(String(80), unique=True, nullable=False)
+    first_name = Column(String(80), unique=False, nullable=False)
+    last_name = Column(String(80), unique=False, nullable=False)
     email = Column(String(120), unique=True, nullable=False)
 
-    def __init__(self, username: str, email: str):
+    def __init__(self, first_name: str, last_name: str, email: str):
         """Initialize User."""
-        self.username = username
+        self.first_name = first_name
+        self.last_name = last_name
         self.email = email
 
     def __repr__(self):
         """String representation for User."""
-        return '<{}: {}: {}:>'.format(self.__class__.__name__, self.id, self.username)
+        return '<{}: {}: {}:>'.format(self.__class__.__name__, self.id, self.email)

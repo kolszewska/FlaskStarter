@@ -4,7 +4,8 @@ from flask_restplus import fields
 from backend.api import api
 
 new_user = api.model('User', {
-    'username': fields.String(required=True),
+    'first_name': fields.String(required=True),
+    'last_name': fields.String(required=True),
     'email': fields.String(required=True),
     'password': fields.String(required=True),
 })

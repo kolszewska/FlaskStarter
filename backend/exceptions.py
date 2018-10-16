@@ -2,24 +2,24 @@
 
 
 class ResourceManagerException(Exception):
-	"""Base class for all HTTP Exceptions."""
+    """Base class for all HTTP Exceptions."""
 
-	pass
+    pass
 
 
 class UnsupportedActionException(ResourceManagerException):
-	"""Exception for unsupported Action."""
+    """Exception for unsupported Action."""
 
-	pass
+    pass
 
 
 class InvalidResponseException(ResourceManagerException):
-	"""Exception for invalid Response."""
+    """Exception for invalid Response."""
 
-	pass
+    pass
 
 
 class InternalErrorException(ResourceManagerException):
-	"""Exception designed to use to indicate internal errors (like DB/Storage error)."""
+    """Exception designed to use to indicate internal errors (like DB/Storage error)."""
 
-	pass
+    pass

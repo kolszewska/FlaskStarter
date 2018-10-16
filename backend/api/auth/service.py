@@ -19,5 +19,5 @@ class Register(Resource):
     def post():
         """Endpoint for User registration."""
         user = request.json
-        user_id = add_user(user['username'], user['email'])
+        user_id = add_user(user['first_name'], user['last_name'], user['email'])
         return user_id, 201
