@@ -3,7 +3,7 @@ import logging
 
 from sqlalchemy.exc import IntegrityError
 
-from backend.repositories.users import add_user
+from resourcemanager.repositories.users import add_user
 
 
 def add_users() -> None:

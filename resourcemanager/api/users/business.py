@@ -1,8 +1,8 @@
 """Module responsible for business logic for all User related endpoints."""
 from typing import List
 
-from backend.database.models import User
-import backend.repositories.users as users_repository
+from resourcemanager.database.models import User
+import resourcemanager.repositories.users as users_repository
 
 
 def get_all_users() -> List[User]:

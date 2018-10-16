@@ -1,7 +1,7 @@
 """Module defining serializers for User."""
 from flask_restplus import fields
 
-from backend.api import api
+from resourcemanager.api import api
 
 user = api.model('User', {
     'first_name': fields.String(required=True),

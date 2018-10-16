@@ -1,11 +1,9 @@
 """Module responsible for definition of User related service."""
-from flask import request
-
 from flask_restplus import Resource
 
-from backend.api import api
-from backend.api.users import serializers
-from backend.api.users.business import get_all_users
+from resourcemanager.api import api
+from resourcemanager.api.users import serializers
+from resourcemanager.api.users.business import get_all_users
 
 users_ns = api.namespace('users', description='Operations related to users operations.')
 

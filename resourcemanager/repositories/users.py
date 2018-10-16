@@ -1,9 +1,9 @@
 """Module responsible for definition of UserRepository."""
 from typing import List
 
-from backend.database import db_session
+from resourcemanager.database import db_session
 
-from backend.database.models import User
+from resourcemanager.database.models import User
 
 
 def add_user(first_name: str, last_name: str, email: str) -> int:

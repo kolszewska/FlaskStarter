@@ -16,7 +16,7 @@ Base.query = session.query_property()
 
 def init_db():
     """Initialize database."""
-    import backend.database.models
+    import resourcemanager.database.models
     Base.metadata.create_all(bind=engine)
 
 

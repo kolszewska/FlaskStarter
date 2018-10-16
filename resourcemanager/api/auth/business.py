@@ -1,8 +1,8 @@
 """Module responsible for business logic for all Auth endpoints."""
-import backend.repositories.users as users_repository
+import resourcemanager.repositories.users as users_repository
 
-from backend.database.models import User
-from backend.api.exceptions import InvalidArgumentsException
+from resourcemanager.database.models import User
+from resourcemanager.api.exceptions import InvalidArgumentsException
 
 
 def add_user(first_name: str, last_name: str, email: str) -> int:

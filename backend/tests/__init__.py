@@ -1,1 +1,0 @@
-"""Module responsible for tests."""

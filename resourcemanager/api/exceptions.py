@@ -1,5 +1,5 @@
 """Exceptions used across whole API."""
-from backend.exceptions import ResourceManagerException
+from resourcemanager.exceptions import ResourceManagerException
 
 
 class BaseHTTPException(ResourceManagerException):
