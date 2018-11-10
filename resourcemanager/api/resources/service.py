@@ -2,6 +2,7 @@
 from typing import Any
 
 from flask import request
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restplus import Resource
 
 from resourcemanager.api import api
@@ -16,7 +17,9 @@ resources_ns = api.namespace('resources', description='Operations related to res
 class GetProducts(Resource):
 
     @staticmethod
-    @api.doc(responses={200: 'Successfully retrieved products.'})
+    @jwt_required
+    @resources_ns.doc(security='token')
+    @resources_ns.doc(responses={200: 'Successfully retrieved products.'})
     @resources_ns.marshal_with(serializers.products_list)
     def patch() -> Any:
         """Endpoint for retrieving all Products."""
@@ -28,6 +31,8 @@ class GetProducts(Resource):
 class AddProduct(Resource):
 
     @staticmethod
+    @jwt_required
+    @resources_ns.doc(security='token')
     @resources_ns.doc(responses={201: 'Product was successfully added.', 400: 'Invalid arguments.'})
     @resources_ns.expect(serializers.new_product)
     def post() -> Any:
@@ -42,11 +47,18 @@ class AddProduct(Resource):
 class RemoveProduct(Resource):
 
     @staticmethod
-    @resources_ns.doc(responses={201: 'Product was successfully removed.', 400: 'Invalid arguments.'})
+    @jwt_required
+    @resources_ns.doc(security='token')
+    @resources_ns.doc(
+        responses={201: 'Product was successfully removed.', 400: 'Invalid arguments.', 403: 'Unathorized.'})
     def delete(product_id: str) -> Any:
         """Endpoint for removing Product."""
-        remove_product(product_id)
-        return 200
+        is_admin = get_jwt_identity()['is_admin']
+        if is_admin:
+            remove_product(product_id)
+            return 200
+        else:
+            return 403
 
 
 @resources_ns.route('/increase_quantity/<string:product_id>')
@@ -54,6 +66,8 @@ class RemoveProduct(Resource):
 class IncreaseProductQuantity(Resource):
 
     @staticmethod
+    @jwt_required
+    @resources_ns.doc(security='token')
     @resources_ns.doc(responses={201: 'Product quantity was successfully increased.', 400: 'Invalid arguments.'})
     @resources_ns.expect(serializers.quantity_update)
     def patch(product_id: str) -> Any:
@@ -68,6 +82,8 @@ class IncreaseProductQuantity(Resource):
 class DecreaseProductQuantity(Resource):
 
     @staticmethod
+    @jwt_required
+    @resources_ns.doc(security='token')
     @resources_ns.doc(responses={201: 'Product quantity was successfully decreased.', 400: 'Invalid arguments.'})
     @resources_ns.expect(serializers.quantity_update)
     def patch(product_id: str) -> Any:

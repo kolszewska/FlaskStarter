@@ -1,5 +1,5 @@
 """Module responsible for defining all relational database models."""
-from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy import Column, Integer, String, Float, Boolean
 from passlib.hash import pbkdf2_sha256 as sha256
 
 from resourcemanager.database import Base
@@ -11,9 +11,8 @@ class User(Base):
     id = Column(Integer, autoincrement=True, primary_key=True)
     username = Column(String(80), unique=False, nullable=False)
     email = Column(String(120), unique=True, nullable=False)
-    password = Column(String(120), unique=False, nullable=False)
-
-    # TODO: add role
+    password = Column(String(120), unique=False)
+    is_admin = Column(Boolean, nullable=False)
 
     @staticmethod
     def generate_hash(password: str):
@@ -28,6 +27,7 @@ class User(Base):
         self.username = username
         self.email = email
         self.password = password_hash
+        self.is_admin = False
 
 
 class RevokedToken(Base):

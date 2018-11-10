@@ -8,7 +8,7 @@ from resourcemanager.api.exceptions import InvalidArgumentsException
 
 
 def add_user(username: str, email: str, password: str) -> int:
-    """Add new user."""
+    """Add new User."""
     user = users_repository.get_user_by_email(email)
     if user:
         raise InvalidArgumentsException('User with this e-mail already exist!')
@@ -21,9 +21,9 @@ def get_user_with_username(username: str) -> User:
     return users_repository.get_user_by_email(username)
 
 
-def generate_access_token_for_user(username: str):
+def generate_access_token_for_user(username: str, is_admin: bool):
     """Generate JWT token for user"""
-    return create_access_token(identity=username)
+    return create_access_token(identity={'username:': username, 'is_admin': is_admin})
 
 
 def log_in_user(email: str, password: str):
@@ -33,7 +33,7 @@ def log_in_user(email: str, password: str):
         raise InvalidArgumentsException('User with this e-mail does not exist!')
     else:
         if User.verify_hash(password, user.password):
-            return generate_access_token_for_user(user.username)
+            return generate_access_token_for_user(user.username, user.is_admin)
         else:
             raise InvalidArgumentsException('E-mail or password is incorrect!')
 

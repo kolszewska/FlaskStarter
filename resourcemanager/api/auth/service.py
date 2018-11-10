@@ -8,7 +8,7 @@ from flask_restplus import Resource
 from resourcemanager.api import api
 from resourcemanager.api.auth import serializers
 from resourcemanager.api.auth.business import add_user, generate_access_token_for_user, log_in_user, \
-    add_token_to_blacklist
+    add_token_to_blacklist, get_user_with_username
 
 auth_ns = api.namespace('auth', description='Operations related to authorization.')
 
@@ -24,8 +24,13 @@ class OAuth2Authorization(Resource):
 
 def handle_oauth2_authorization(remote, token, user_info):
     if token:
+        # Add user if he doesn't have account already
+        user = get_user_with_username(user_info['preffered_username'])
+        if not user:
+            add_user(user_info['preffered_username'], user_info['email'], password='')
+
         # Generate token for application for user
-        access_token = generate_access_token_for_user(user_info['preffered_username'])
+        access_token = generate_access_token_for_user(user_info['preffered_username'], user.is_admin)
         return jsonify(access_token)
 
 
@@ -47,7 +52,7 @@ class LogIn(Resource):
 
     @staticmethod
     @auth_ns.doc(responses={200: 'User was successfully logged in.',
-                        400: 'User does not exist or wrong credentials were provided.'})
+                            400: 'User does not exist or wrong credentials were provided.'})
     @api.expect(serializers.sign_in)
     def post() -> Any:
         """Endpoint for User sign in."""
