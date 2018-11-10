@@ -1,11 +1,11 @@
 """Module responsible for defining API."""
-from flask import Flask, Blueprint, jsonify
-from flask_jwt_extended import JWTManager, create_access_token
+from flask import Flask, Blueprint
+from flask_jwt_extended import JWTManager
 from authlib.flask.client import OAuth
 from loginpass import create_flask_blueprint, GitHub
 
 from resourcemanager.api import api
-from resourcemanager.api.auth.service import auth_ns
+from resourcemanager.api.auth.service import auth_ns, handle_oauth2_authorization
 from resourcemanager.api.users.service import users_ns
 from resourcemanager.database import session, init_db
 
@@ -17,13 +17,6 @@ app.config.from_pyfile('config.py')
 
 oauth = OAuth(app)
 jwt = JWTManager(app)
-
-
-def handle_oauth2_authorization(remote, token, user_info):
-    if token:
-        # Create token for application
-        access_token = create_access_token(identity=user_info['preferred_username'])
-        return jsonify(access_token)
 
 
 def initialize_app(flask_app):
