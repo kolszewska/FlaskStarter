@@ -8,8 +8,8 @@ from resourcemanager.repositories.users import add_user
 
 def add_users() -> None:
     """Insert default users."""
-    add_user('Bob', 'Newbie', 'employee@company.com')
-    add_user('George', 'Bossy', 'manager@company.com')
+    add_user('Bob', 'employee@company.com')
+    add_user('Boss', 'manager@company.com')
 
 
 def apply_all_fixtures() -> None:

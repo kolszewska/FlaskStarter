@@ -6,10 +6,10 @@ from resourcemanager.database import db_session
 from resourcemanager.database.models import User
 
 
-def add_user(first_name: str, last_name: str, email: str) -> int:
+def add_user(username: str, email: str) -> int:
     """Add new User to database."""
     with db_session() as session:
-        user = User(first_name, last_name, email)
+        user = User(username, email)
         session.add(user)
         session.commit()
     return user.id
