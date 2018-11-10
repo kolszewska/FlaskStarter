@@ -1,4 +1,5 @@
 """Module responsible for definition of User related service."""
+from flask_jwt_extended import jwt_required
 from flask_restplus import Resource
 
 from resourcemanager.api import api
@@ -12,7 +13,8 @@ users_ns = api.namespace('users', description='Operations related to users opera
 class GetUsers(Resource):
 
     @staticmethod
-    @api.doc(responses={200: 'Successfully retrieved users.'})
+    @jwt_required
+    @users_ns.doc(responses={200: 'Successfully retrieved users.'})
     @users_ns.marshal_with(serializers.users_list)
     def get():
         """Endpoint for retrieving all Users."""

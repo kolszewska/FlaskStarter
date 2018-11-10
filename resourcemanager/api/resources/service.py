@@ -28,8 +28,8 @@ class GetProducts(Resource):
 class AddProduct(Resource):
 
     @staticmethod
-    @api.doc(responses={201: 'Product was successfully added.', 400: 'Invalid arguments.'})
-    @api.expect(serializers.new_product)
+    @resources_ns.doc(responses={201: 'Product was successfully added.', 400: 'Invalid arguments.'})
+    @resources_ns.expect(serializers.new_product)
     def post() -> Any:
         """Endpoint for adding new Product."""
         product = request.json
@@ -42,7 +42,7 @@ class AddProduct(Resource):
 class RemoveProduct(Resource):
 
     @staticmethod
-    @api.doc(responses={201: 'Product was successfully removed.', 400: 'Invalid arguments.'})
+    @resources_ns.doc(responses={201: 'Product was successfully removed.', 400: 'Invalid arguments.'})
     def delete(product_id: str) -> Any:
         """Endpoint for removing Product."""
         remove_product(product_id)
@@ -54,8 +54,8 @@ class RemoveProduct(Resource):
 class IncreaseProductQuantity(Resource):
 
     @staticmethod
-    @api.doc(responses={201: 'Product quantity was successfully increased.', 400: 'Invalid arguments.'})
-    @api.expect(serializers.quantity_update)
+    @resources_ns.doc(responses={201: 'Product quantity was successfully increased.', 400: 'Invalid arguments.'})
+    @resources_ns.expect(serializers.quantity_update)
     def patch(product_id: str) -> Any:
         """Endpoint for increasing quantity for Product."""
         data = request.json
@@ -68,8 +68,8 @@ class IncreaseProductQuantity(Resource):
 class DecreaseProductQuantity(Resource):
 
     @staticmethod
-    @api.doc(responses={201: 'Product quantity was successfully decreased.', 400: 'Invalid arguments.'})
-    @api.expect(serializers.quantity_update)
+    @resources_ns.doc(responses={201: 'Product quantity was successfully decreased.', 400: 'Invalid arguments.'})
+    @resources_ns.expect(serializers.quantity_update)
     def patch(product_id: str) -> Any:
         """Endpoint for decreasing quantity for Product."""
         data = request.json

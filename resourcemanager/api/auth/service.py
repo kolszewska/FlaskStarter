@@ -2,11 +2,13 @@
 from typing import Any
 
 from flask import request, redirect, jsonify
+from flask_jwt_extended import jwt_required, get_raw_jwt
 from flask_restplus import Resource
 
 from resourcemanager.api import api
 from resourcemanager.api.auth import serializers
-from resourcemanager.api.auth.business import add_user, generate_access_token_for_user, log_in_user
+from resourcemanager.api.auth.business import add_user, generate_access_token_for_user, log_in_user, \
+    add_token_to_blacklist
 
 auth_ns = api.namespace('auth', description='Operations related to authorization.')
 
@@ -31,7 +33,7 @@ def handle_oauth2_authorization(remote, token, user_info):
 class Register(Resource):
 
     @staticmethod
-    @api.doc(responses={201: 'User was successfully created.', 400: 'Invalid arguments.'})
+    @auth_ns.doc(responses={201: 'User was successfully created.', 400: 'Invalid arguments.'})
     @api.expect(serializers.new_user)
     def post() -> Any:
         """Endpoint for User registration."""
@@ -41,15 +43,28 @@ class Register(Resource):
 
 
 @auth_ns.route('/login')
-class Register(Resource):
+class LogIn(Resource):
 
     @staticmethod
-    @api.doc(responses={200: 'User was successfully logged in.',
+    @auth_ns.doc(responses={200: 'User was successfully logged in.',
                         400: 'User does not exist or wrong credentials were provided.'})
     @api.expect(serializers.sign_in)
     def post() -> Any:
         """Endpoint for User sign in."""
         sign_in = request.json
-        print(sign_in)
         token = log_in_user(sign_in['email'], sign_in['password'])
         return {'token': token}, 200
+
+
+@auth_ns.route('/logout')
+class LogOut(Resource):
+
+    @staticmethod
+    @jwt_required
+    @auth_ns.doc(security='token')
+    @auth_ns.doc(responses={200: 'User was successfully logged out.'})
+    def post() -> Any:
+        """Endpoint for User log out."""
+        jti = get_raw_jwt()['jti']
+        add_token_to_blacklist(jti)
+        return 200

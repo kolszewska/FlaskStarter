@@ -10,7 +10,15 @@ from resourcemanager.api.exceptions import UnauthorizedException, NotFoundExcept
 
 logger = logging.getLogger(__name__)
 
-api = Api(version='0.0.1', title='Resources Manager')
+authorizations = {
+    'token': {
+        'type': 'apiKey',
+        'in': 'header',
+        'name': 'Authorization',
+    },
+}
+
+api = Api(version='0.0.1', title='Resources Manager', authorizations=authorizations)
 
 
 @api.errorhandler

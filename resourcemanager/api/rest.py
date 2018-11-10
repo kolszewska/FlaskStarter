@@ -9,6 +9,7 @@ from resourcemanager.api.auth.service import auth_ns, handle_oauth2_authorizatio
 from resourcemanager.api.users.service import users_ns
 from resourcemanager.api.resources.service import resources_ns
 from resourcemanager.database import session, init_db
+from resourcemanager.repositories.tokens import is_jti_blacklisted
 
 # Definition of application
 app = Flask(__name__)
@@ -18,6 +19,12 @@ app.config.from_pyfile('config.py')
 
 oauth = OAuth(app)
 jwt = JWTManager(app)
+
+
+@jwt.token_in_blacklist_loader
+def check_if_token_is_blacklisted(decrypted_token):
+    jti = decrypted_token['jti']
+    return is_jti_blacklisted(jti)
 
 
 def initialize_app(flask_app):

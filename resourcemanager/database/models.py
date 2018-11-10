@@ -1,5 +1,6 @@
 """Module responsible for defining all relational database models."""
 from sqlalchemy import Column, Integer, String, Float
+from passlib.hash import pbkdf2_sha256 as sha256
 
 from resourcemanager.database import Base
 
@@ -13,13 +14,27 @@ class User(Base):
     password = Column(String(120), unique=False, nullable=False)
 
     # TODO: add role
-    # TODO: hash password
+
+    @staticmethod
+    def generate_hash(password: str):
+        return sha256.hash(password)
+
+    @staticmethod
+    def verify_hash(password: str, hash: str):
+        return sha256.verify(password, hash)
 
     def __init__(self, username: str, email: str, password_hash: str) -> None:
         """Initialize User."""
         self.username = username
         self.email = email
         self.password = password_hash
+
+
+class RevokedToken(Base):
+    """Defines model for revoked Tokens."""
+    __tablename__ = 'revoked_tokens'
+    id = Column(Integer, autoincrement=True, primary_key=True)
+    jti = Column(String(120))
 
 
 class Product(Base):

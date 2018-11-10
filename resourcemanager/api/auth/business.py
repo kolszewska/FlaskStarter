@@ -2,6 +2,7 @@
 from flask_jwt_extended import create_access_token
 
 import resourcemanager.repositories.users as users_repository
+import resourcemanager.repositories.tokens as tokens_repository
 from resourcemanager.database.models import User
 from resourcemanager.api.exceptions import InvalidArgumentsException
 
@@ -27,13 +28,16 @@ def generate_access_token_for_user(username: str):
 
 def log_in_user(email: str, password: str):
     """Log in user."""
-    print(email)
     user = users_repository.get_user_by_email(email)
-    print(user)
     if not user:
         raise InvalidArgumentsException('User with this e-mail does not exist!')
     else:
-        if user.password == password:
+        if User.verify_hash(password, user.password):
             return generate_access_token_for_user(user.username)
         else:
             raise InvalidArgumentsException('E-mail or password is incorrect!')
+
+
+def add_token_to_blacklist(jti):
+    """Add JTI to blacklist"""
+    tokens_repository.add_revoked_token(jti)

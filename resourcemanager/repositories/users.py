@@ -9,7 +9,7 @@ from resourcemanager.database.models import User
 def add_user(username: str, email: str, password: str) -> int:
     """Add new User to database."""
     with db_session() as session:
-        user = User(username, email, password)
+        user = User(username, email, User.generate_hash(password))
         session.add(user)
         session.commit()
     return user.id
