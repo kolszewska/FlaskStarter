@@ -7,6 +7,7 @@ from loginpass import create_flask_blueprint, GitHub
 from resourcemanager.api import api
 from resourcemanager.api.auth.service import auth_ns, handle_oauth2_authorization
 from resourcemanager.api.users.service import users_ns
+from resourcemanager.api.resources.service import resources_ns
 from resourcemanager.database import session, init_db
 
 # Definition of application
@@ -28,6 +29,7 @@ def initialize_app(flask_app):
     # Add namespaces
     api.add_namespace(auth_ns)
     api.add_namespace(users_ns)
+    api.add_namespace(resources_ns)
 
     flask_app.register_blueprint(blueprint)
 

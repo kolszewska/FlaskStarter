@@ -7,7 +7,7 @@ from resourcemanager.api.exceptions import InvalidArgumentsException
 
 
 def add_user(username: str, email: str, password: str) -> int:
-    """Add new users."""
+    """Add new user."""
     user = users_repository.get_user_by_email(email)
     if user:
         raise InvalidArgumentsException('User with this e-mail already exist!')
