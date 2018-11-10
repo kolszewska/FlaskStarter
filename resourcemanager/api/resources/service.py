@@ -50,7 +50,7 @@ class RemoveProduct(Resource):
     @jwt_required
     @resources_ns.doc(security='token')
     @resources_ns.doc(
-        responses={201: 'Product was successfully removed.', 400: 'Invalid arguments.', 403: 'Unathorized.'})
+        responses={201: 'Product was successfully removed.', 400: 'Invalid arguments.', 403: 'Unauthorized.'})
     def delete(product_id: str) -> Any:
         """Endpoint for removing Product."""
         is_admin = get_jwt_identity()['is_admin']

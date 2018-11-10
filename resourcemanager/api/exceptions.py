@@ -29,4 +29,5 @@ class InvalidArgumentsException(BaseHTTPException):
 class AccessForbiddenException(BaseHTTPException):
     """Exception designed to use while the user does not have a privilege to perform action."""
 
+
 pass
