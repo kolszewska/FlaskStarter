@@ -16,9 +16,9 @@ def add_user(username: str, email: str, password: str) -> int:
         return users_repository.add_user(username, email, password)
 
 
-def get_user_with_username(username: str) -> User:
-    """"Get users for given username."""
-    return users_repository.get_user_by_email(username)
+def get_user_with_email(email: str) -> User:
+    """"Get users for given email."""
+    return users_repository.get_user_by_email(email)
 
 
 def generate_access_token_for_user(username: str, is_admin: bool):

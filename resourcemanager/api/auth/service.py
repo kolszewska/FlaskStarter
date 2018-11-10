@@ -8,7 +8,7 @@ from flask_restplus import Resource
 from resourcemanager.api import api
 from resourcemanager.api.auth import serializers
 from resourcemanager.api.auth.business import add_user, generate_access_token_for_user, log_in_user, \
-    add_token_to_blacklist, get_user_with_username
+    add_token_to_blacklist, get_user_with_email
 
 auth_ns = api.namespace('auth', description='Operations related to authorization.')
 
@@ -23,14 +23,13 @@ class OAuth2Authorization(Resource):
 
 
 def handle_oauth2_authorization(remote, token, user_info):
-    if token:
-        # Add user if he doesn't have account already
-        user = get_user_with_username(user_info['preffered_username'])
+    if user_info:
+        user = get_user_with_email(user_info['email'])
         if not user:
-            add_user(user_info['preffered_username'], user_info['email'], password='')
-
-        # Generate token for application for user
-        access_token = generate_access_token_for_user(user_info['preffered_username'], user.is_admin)
+            add_user(user_info['preferred_username'], user_info['email'], password='')
+    if token:
+        user = get_user_with_email(user_info['email'])
+        access_token = generate_access_token_for_user(user.username, user.is_admin)
         return jsonify(access_token)
 
 
