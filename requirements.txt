@@ -1,0 +1,8 @@
+Flask==1.0.2
+flask-restplus==0.12.1
+Flask-SQLAlchemy==2.3.2
+ipython==6.5.0
+pytest==3.8.2
+Authlib==0.10
+loginpass==0.2.1
+Flask-JWT-Extended==3.13.1
