@@ -6,24 +6,28 @@ export class ProductsProvider {
 
     lists: any = [
         {
-            itemName: 'Milk',
-            price: "$1.98",
-            size: 'Gallon'
+            manufacturerName: 'Cow',
+            modelName: 'Milk',
+            price: "1.98",
+            quantity: 12
         },
         {
-            itemName: 'Cheese',
-            price: "$2.98 lb",
-            size: 'One Pound'
+            manufacturerName: 'Cow',
+            modelName: 'Cheese',
+            price: "2.98",
+            quantity: 13
         },
         {
-            itemName: 'Yogurt',
-            price: "$3.98",
-            size: 'Pint'
+            manufacturerName: 'Cow',
+            modelName: 'Yogurt',
+            price: "3.98",
+            quantity: 33
         },
         {
-            itemName: 'Bread',
-            price: "$2.98",
-            size: 'Loaf'
+            manufacturerName: 'Nature',
+            modelName: 'Bread',
+            price: "2.98",
+            quantity: 12
         }
     ];
 

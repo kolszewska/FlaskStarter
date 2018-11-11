@@ -11,6 +11,8 @@ import {LoginPage} from '../pages/login/login';
 import {ProductsExplorerPage} from '../pages/products-explorer/products-explorer';
 import { ProductsProvider } from '../providers/products';
 import { ProductInfoPage } from '../pages/product-info/product-info';
+import { AddProductPage } from '../pages/add-product/add-product';
+
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { ProductInfoPage } from '../pages/product-info/product-info';
     RegisterPage,
     LoginPage,
     ProductsExplorerPage,
-    ProductInfoPage
+    ProductInfoPage,
+    AddProductPage
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,8 @@ import { ProductInfoPage } from '../pages/product-info/product-info';
     RegisterPage,
     LoginPage,
     ProductsExplorerPage,
-    ProductInfoPage
+    ProductInfoPage,
+    AddProductPage
   ],
   providers: [
     StatusBar,

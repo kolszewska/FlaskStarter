@@ -1,0 +1,20 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-title>Add new product</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item>
+            <ion-input placeholder="Manufacturer name" [(ngModel)]="manufacturerName"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input placeholder="Model name" [(ngModel)]="modelName"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input placeholder="Price" [(ngModel)]="price"></ion-input>
+        </ion-item>
+    </ion-list>
+    <button ion-button (click)="addProduct()">Add product</button>
+</ion-content>
