@@ -7,9 +7,9 @@
 
 
   <ion-list>
-      <button ion-button full color='light'>Log in with GitHub</button>
-      <button ion-button full color='primary'>Log</button>
-      <button ion-button full color='primary'>Register</button>
+      <button ion-button full color='light' (click)="loginWithGitHub()" >Log in with GitHub</button>
+      <button ion-button full color='primary' (click)="goLogin()">Log</button>
+      <button ion-button full color='primary' (click)="goRegister()">Register</button>
   </ion-list>
 </ion-content>
 
