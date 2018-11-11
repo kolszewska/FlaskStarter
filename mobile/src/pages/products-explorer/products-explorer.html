@@ -1,0 +1,20 @@
+<ion-header>
+        <ion-navbar hideBackButton="true">   
+            <ion-title>
+                Products
+            </ion-title>  
+        <ion-buttons end>
+            <button ion-button icon-only (click)="logOut()">
+                <ion-icon md="md-log-out"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <button clear ion-item *ngFor="let product of productsList"  (click)="itemClicked(product)">
+            {{product.itemName}}
+        </button>
+    </ion-list>
+</ion-content>
