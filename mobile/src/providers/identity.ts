@@ -14,8 +14,8 @@ export class IdentityProvider {
   }
 
   setUserIdentity(token: string) {
-    this._userToken = token['token'];
-    const decodedToken = this.helper.decodeToken(token["token"]);
+    this._userToken = token;
+    const decodedToken = this.helper.decodeToken(token);
     if (decodedToken['is_admin'] == 'true') {
       this._isUserAdmin = true;
     } else {

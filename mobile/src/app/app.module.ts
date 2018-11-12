@@ -13,7 +13,6 @@ import { HomePage } from '../pages/home/home';
 import { RegisterPage } from '../pages/register/register';
 import { LoginPage } from '../pages/login/login';
 import { ProductsExplorerPage } from '../pages/products-explorer/products-explorer';
-import { ProductsProvider } from '../providers/products';
 import { RestProvider } from '../providers/rest';
 import { ProductInfoPage } from '../pages/product-info/product-info';
 import { AddProductPage } from '../pages/add-product/add-product';
@@ -53,7 +52,6 @@ export function tokenGetter() {
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ProductsProvider,
     RestProvider,
     IdentityProvider,
     Deeplinks,

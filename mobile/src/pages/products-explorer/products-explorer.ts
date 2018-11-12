@@ -1,9 +1,18 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { HomePage } from '../home/home';
-import { ProductsProvider } from '../../providers/products';
 import { ProductInfoPage } from '../product-info/product-info';
 import { AddProductPage } from '../add-product/add-product';
+import { RestProvider } from '../../providers/rest';
+
+
+export class Product {
+    id: number;
+    manufacturer_name: string;
+    model_name: string;
+    price: number;
+    quantity: number;
+}
 
 @Component({
   selector: 'page-products-explorer',
@@ -11,14 +20,15 @@ import { AddProductPage } from '../add-product/add-product';
 })
 export class ProductsExplorerPage {
 
-  productsList: any;
+  productsList: Array<Product>;
 
-  constructor(public navCtrl: NavController, public products: ProductsProvider) {
+  constructor(public navCtrl: NavController, public restProvider: RestProvider) {
 
   }
 
-  ionViewDidLoad() {
-    this.productsList = this.products.lists;
+  ionViewDidEnter() {
+    this.restProvider.getResources().then(value =>
+      this.productsList = value['products']);
   }
 
   itemClicked(item): void {

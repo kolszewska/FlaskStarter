@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar color="primary">
-        <ion-title>{{itemInfo.manufacturerName}} {{itemInfo.modelName}}</ion-title>
+        <ion-title>{{itemInfo.manufacturer_name}} {{itemInfo.model_name}}</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -25,7 +25,7 @@
         </ion-item>
     </ion-list>
 
-    <div showWhen="android">
+    <div [hidden]="!canDelete">
         <button ion-button color="danger">Remove product</button>
     </div>
 </ion-content>
