@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class RestProvider {
 
-  apiUrl = "http://127.0.0.1:5000/api";
+  apiUrl = "http://192.168.56.1:5000/api";
   oauth2Url = this.apiUrl + '/auth/oauth2';
 
   constructor(public http: HttpClient) {
