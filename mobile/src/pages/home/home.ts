@@ -19,12 +19,13 @@ export class HomePage {
     const options: InAppBrowserOptions = {
       zoom: 'no'
     }
-    const browser = this.inAppBrowser.create(url, '_self', options);
+    const browser = this.inAppBrowser.create(url, '_blank', options);
     browser.close
   }
 
   loginWithGitHub() {
      this.openWebpage(this.restProvider.oauth2Url);
+
   }
 
   goRegister() {

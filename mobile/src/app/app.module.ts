@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { Deeplinks } from '@ionic-native/deeplinks';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -48,6 +49,7 @@ import { AddProductPage } from '../pages/add-product/add-product';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ProductsProvider,
     RestProvider,
+    Deeplinks,
     InAppBrowser
   ]
 })
