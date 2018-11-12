@@ -21,7 +21,7 @@ class GetProducts(Resource):
     @resources_ns.doc(security='token')
     @resources_ns.doc(responses={200: 'Successfully retrieved products.'})
     @resources_ns.marshal_with(serializers.products_list)
-    def patch() -> Any:
+    def get() -> Any:
         """Endpoint for retrieving all Products."""
         products = get_all_products()
         return {'products': products}, 200
