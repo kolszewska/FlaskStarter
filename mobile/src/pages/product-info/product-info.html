@@ -26,6 +26,6 @@
     </ion-list>
 
     <div [hidden]="!canDelete">
-        <button ion-button color="danger">Remove product</button>
+        <button ion-button color="danger" (click)="deleteProduct(itemInfo)">Remove product</button>
     </div>
 </ion-content>

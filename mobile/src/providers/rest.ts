@@ -76,6 +76,47 @@ export class RestProvider {
     });
   }
 
+  increaseQuantity(id: string, amount: number) {
+    let body = { 'amount': amount };
+    return new Promise(resolve => {
+      this.http.patch(this.apiUrl + '/resources/increase_quantity/' + id, body, {
+        headers: new HttpHeaders().set('Authorization', 'Bearer ' +
+          this.identityProvider.getUserToken())
+      }).subscribe(data => {
+        resolve(data);
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+
+  decreaseQuantity(id: string, amount: number) {
+    let body = { 'amount': amount };
+    return new Promise(resolve => {
+      this.http.patch(this.apiUrl + '/resources/decrease_quantity/' + id, body, {
+        headers: new HttpHeaders().set('Authorization', 'Bearer ' +
+          this.identityProvider.getUserToken())
+      }).subscribe(data => {
+        resolve(data);
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+
+  deleteProduct(id: string) {
+    return new Promise(resolve => {
+      this.http.delete(this.apiUrl + '/resources/remove_product/' + id, {
+        headers: new HttpHeaders().set('Authorization', 'Bearer ' +
+          this.identityProvider.getUserToken())
+      }).subscribe(data => {
+        resolve(data);
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+
   getUsers() {
     return new Promise(resolve => {
       this.http.get(this.apiUrl + '/users').subscribe(data => {

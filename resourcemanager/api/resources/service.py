@@ -73,7 +73,7 @@ class IncreaseProductQuantity(Resource):
     def patch(product_id: str) -> Any:
         """Endpoint for increasing quantity for Product."""
         data = request.json
-        new_quantity = increase_product_quantity(product_id, data['amount'])
+        new_quantity = increase_product_quantity(product_id, int(data['amount']))
         return {'new_quantity': new_quantity}, 200
 
 
@@ -89,5 +89,5 @@ class DecreaseProductQuantity(Resource):
     def patch(product_id: str) -> Any:
         """Endpoint for decreasing quantity for Product."""
         data = request.json
-        new_quantity = decrease_product_quantity(product_id, data['amount'])
+        new_quantity = decrease_product_quantity(product_id, int(data['amount']))
         return {'new_quantity': new_quantity}, 200
