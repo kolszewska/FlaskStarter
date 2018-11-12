@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { RestProvider } from '../../providers/rest';
+import { IdentityProvider } from '../../providers/identity';
+import { LoginPage } from '../login/login';
 
 @Component({
     selector: 'page-register',
@@ -12,14 +15,12 @@ export class RegisterPage {
     password: string;
     confirmPassword: string;
 
-    constructor(public navCtrl: NavController) {
+    constructor(public navCtrl: NavController, public restProvider: RestProvider, private identityProvider: IdentityProvider) {
 
     }
 
     register() {
-        console.log("Username:" + this.username);
-        console.log("Email:" + this.email);
-        console.log("Password:" + this.password);
-        console.log("Confirm:" + this.confirmPassword);
+        this.restProvider.register(this.username, this.email, this.password);
+        this.navCtrl.push(LoginPage);
     }
 }

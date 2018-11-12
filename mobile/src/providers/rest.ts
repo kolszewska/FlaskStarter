@@ -25,9 +25,36 @@ export class RestProvider {
     });
   }
 
+  logOut() {
+    return new Promise(resolve => {
+      this.http.post(this.apiUrl + '/auth/logout', '', {
+        headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.identityProvider.getUserToken())
+      }).subscribe(data => {
+        resolve(data);
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+
+  register(username: string, email: string, password: string) {
+    return new Promise(resolve => {
+      let body = { 'username': username, 'email': email, 'password': password };
+      this.http.post(this.apiUrl + '/auth/register', body, {
+        headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.identityProvider.getUserToken())
+      }).subscribe(data => {
+        resolve(data);
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+
   getResources() {
     return new Promise(resolve => {
-      this.http.get(this.apiUrl + '/resources', { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.identityProvider.getUserToken()) }).subscribe(data => {
+      this.http.get(this.apiUrl + '/resources', {
+        headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.identityProvider.getUserToken())
+      }).subscribe(data => {
         resolve(data);
       }, err => {
         console.log(err);

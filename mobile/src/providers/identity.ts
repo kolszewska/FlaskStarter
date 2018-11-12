@@ -30,4 +30,9 @@ export class IdentityProvider {
   isUserAdmin() {
     return this._isUserAdmin;
   }
+
+  deleteIdentity() {
+    this._userToken = '';
+    this._isUserAdmin = '';
+  }
 }
