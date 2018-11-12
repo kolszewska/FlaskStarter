@@ -4,6 +4,11 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class ProductsProvider {
 
+
+    constructor() {
+        console.log('Hello ProductsProvider Provider');
+    }
+
     lists: any = [
         {
             manufacturerName: 'Cow',
@@ -30,9 +35,4 @@ export class ProductsProvider {
             quantity: 12
         }
     ];
-
-    constructor() {
-        console.log('Hello ProductsProvider Provider');
-    }
-
 }

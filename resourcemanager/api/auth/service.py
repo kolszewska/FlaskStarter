@@ -20,6 +20,7 @@ class OAuth2Authorization(Resource):
     def get() -> Any:
         """Redirect to user GitHub as a provider."""
         return redirect('github/login')
+        
 
 
 def handle_oauth2_authorization(remote, token, user_info):
@@ -30,7 +31,7 @@ def handle_oauth2_authorization(remote, token, user_info):
     if token:
         user = get_user_with_email(user_info['email'])
         access_token = generate_access_token_for_user(user.username, user.is_admin)
-        return jsonify(access_token)
+        return redirect('dupa?your_token=' + access_token)
 
 
 @auth_ns.route('/register')

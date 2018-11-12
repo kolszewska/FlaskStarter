@@ -3,6 +3,8 @@ import { NavController } from 'ionic-angular';
 
 import { RegisterPage } from '../register/register';
 import { LoginPage } from '../login/login';
+import { RestProvider } from '../../providers/rest';
+import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser';
 
 @Component({
   selector: 'page-home',
@@ -10,12 +12,19 @@ import { LoginPage } from '../login/login';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public restProvider: RestProvider, private inAppBrowser: InAppBrowser) {
+  }
 
+  openWebpage(url: string) {
+    const options: InAppBrowserOptions = {
+      zoom: 'no'
+    }
+    const browser = this.inAppBrowser.create(url, '_self', options);
+    browser.close
   }
 
   loginWithGitHub() {
-    return 'hello';
+     this.openWebpage(this.restProvider.oauth2Url);
   }
 
   goRegister() {

@@ -3,13 +3,16 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { HttpClientModule } from '@angular/common/http';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import {RegisterPage} from '../pages/register/register';
-import {LoginPage} from '../pages/login/login';
-import {ProductsExplorerPage} from '../pages/products-explorer/products-explorer';
+import { RegisterPage } from '../pages/register/register';
+import { LoginPage } from '../pages/login/login';
+import { ProductsExplorerPage } from '../pages/products-explorer/products-explorer';
 import { ProductsProvider } from '../providers/products';
+import { RestProvider } from '../providers/rest';
 import { ProductInfoPage } from '../pages/product-info/product-info';
 import { AddProductPage } from '../pages/add-product/add-product';
 
@@ -22,10 +25,11 @@ import { AddProductPage } from '../pages/add-product/add-product';
     LoginPage,
     ProductsExplorerPage,
     ProductInfoPage,
-    AddProductPage
+    AddProductPage,
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -42,7 +46,9 @@ import { AddProductPage } from '../pages/add-product/add-product';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ProductsProvider
+    ProductsProvider,
+    RestProvider,
+    InAppBrowser
   ]
 })
 export class AppModule {}

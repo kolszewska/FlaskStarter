@@ -1,6 +1,7 @@
 """Module responsible for defining API."""
 from flask import Flask, Blueprint
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 from authlib.flask.client import OAuth
 from loginpass import create_flask_blueprint, GitHub
 
@@ -19,6 +20,7 @@ app.config.from_pyfile('config.py')
 
 oauth = OAuth(app)
 jwt = JWTManager(app)
+CORS(app)
 
 
 @jwt.token_in_blacklist_loader
