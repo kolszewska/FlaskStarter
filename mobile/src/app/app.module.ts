@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Deeplinks } from '@ionic-native/deeplinks';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -16,7 +17,12 @@ import { ProductsProvider } from '../providers/products';
 import { RestProvider } from '../providers/rest';
 import { ProductInfoPage } from '../pages/product-info/product-info';
 import { AddProductPage } from '../pages/add-product/add-product';
+import { IdentityProvider } from '../providers/identity';
 
+
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
 
 @NgModule({
   declarations: [
@@ -31,7 +37,7 @@ import { AddProductPage } from '../pages/add-product/add-product';
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -49,8 +55,10 @@ import { AddProductPage } from '../pages/add-product/add-product';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ProductsProvider,
     RestProvider,
+    IdentityProvider,
     Deeplinks,
-    InAppBrowser
+    InAppBrowser,
+    JwtHelperService
   ]
 })
 export class AppModule {}

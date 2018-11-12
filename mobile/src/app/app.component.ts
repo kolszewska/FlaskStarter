@@ -1,15 +1,18 @@
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Deeplinks } from '@ionic-native/deeplinks';
 
 import { HomePage } from '../pages/home/home';
+
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   rootPage:any = HomePage;
+
+  @ViewChild(Nav) navChild:Nav;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private deeplink: Deeplinks) {
     platform.ready().then(() => {
@@ -18,13 +21,21 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
 
-      this.deeplink.route({
+      // this.deeplink.route({
+      //   '/': HomePage,
+      // }).subscribe( (match) => {      
+      //   alert(JSON.stringify(match.$args))
+      // }, (noMatch) => {
+      //   console.log("Deeplink did not match", noMatch);
+      // })
 
-      }).subscribe( (match) => {
-        alert(JSON.stringify(match))
-      }, (noMatch) => {
-        alert(JSON.stringify(noMatch));
-      })
+      deeplink.routeWithNavController(this.navChild, {
+        '/:token': HomePage,
+      }).subscribe((match) => {
+        console.log('Successfully routed', match);
+      }, (nomatch) => {
+        console.warn('Unmatched Route', nomatch);
+      });
     });
   }
 }
