@@ -23,12 +23,6 @@ jwt = JWTManager(app)
 CORS(app)
 
 
-@jwt.token_in_blacklist_loader
-def check_if_token_is_blacklisted(decrypted_token):
-    jti = decrypted_token['jti']
-    return is_jti_blacklisted(jti)
-
-
 def initialize_app(flask_app):
     # Register blueprints
     blueprint = Blueprint('api', __name__, url_prefix='/api')

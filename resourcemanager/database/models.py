@@ -30,13 +30,6 @@ class User(Base):
         self.is_admin = False
 
 
-class RevokedToken(Base):
-    """Defines model for revoked Tokens."""
-    __tablename__ = 'revoked_tokens'
-    id = Column(Integer, autoincrement=True, primary_key=True)
-    jti = Column(String(120))
-
-
 class Product(Base):
     """Defines model for the Product."""
     __tablename__ = 'products'

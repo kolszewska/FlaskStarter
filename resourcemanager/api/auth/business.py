@@ -36,8 +36,3 @@ def log_in_user(email: str, password: str):
             return generate_access_token_for_user(user.username, user.is_admin)
         else:
             raise InvalidArgumentsException('E-mail or password is incorrect!')
-
-
-def add_token_to_blacklist(jti):
-    """Add JTI to blacklist"""
-    tokens_repository.add_revoked_token(jti)
