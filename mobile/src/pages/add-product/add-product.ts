@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+
 import { RestProvider } from '../../providers/rest';
 import { ProductsExplorerPage } from '../products-explorer/products-explorer';
 import { NetworkProvider } from '../../providers/network';
@@ -16,16 +17,18 @@ export class AddProductPage {
     price: number;
     isConnectedToNetwork: boolean;
 
-    constructor(public navCtrl: NavController, public restProvider: RestProvider, private networkProvider: NetworkProvider) {
-
-    }
+    constructor(public navCtrl: NavController, public restProvider: RestProvider, private networkProvider: NetworkProvider) {}
 
     public ionViewDidEnter(): void {
         this.isConnectedToNetwork = this.networkProvider.isConnected();
     }
 
     addProduct() {
-        this.restProvider.addResource(this.manufacturerName, this.modelName, this.price);
-        this.navCtrl.push(ProductsExplorerPage);
+        if (this.isConnectedToNetwork) {
+            this.restProvider.addResource(this.manufacturerName, this.modelName, this.price);
+            this.navCtrl.push(ProductsExplorerPage);
+        } else {
+            // TODO: add operation to stack
+        }
     }
 }

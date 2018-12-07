@@ -14,14 +14,16 @@ import { IdentityProvider } from '../../providers/identity';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, public restProvider: RestProvider, private inAppBrowser: InAppBrowser, private navParams: NavParams, public identityProvider: IdentityProvider) {
+  constructor(public navCtrl: NavController, public restProvider: RestProvider, private inAppBrowser: InAppBrowser, 
+    private navParams: NavParams, public identityProvider: IdentityProvider) {
     if (navParams.get('token')) {
       this.identityProvider.setUserIdentity(navParams.get('token'), navParams.get('email'));
       this.navCtrl.push(ProductsExplorerPage);
     }  
   }
 
-  openWebpage(url: string) {
+
+  public openWebpage(url: string): void {
     const options: InAppBrowserOptions = {
       zoom: 'no'
     }
@@ -29,15 +31,15 @@ export class HomePage {
     browser.close
   }
 
-  loginWithGitHub() {
-     this.openWebpage(this.restProvider.oauth2Url);
+  public loginWithGitHub(): void {
+    this.openWebpage(this.restProvider.oauth2Url);
   }
 
-  goRegister() {
+  public goRegister(): void {
     this.navCtrl.push(RegisterPage);
   }
 
-  goLogin() {
+  public goLogin(): void {
     this.navCtrl.push(LoginPage);
   }
 }

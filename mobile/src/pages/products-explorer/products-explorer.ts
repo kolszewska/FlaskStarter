@@ -30,8 +30,12 @@ export class ProductsExplorerPage {
 
   public ionViewDidEnter(): void {
     this.isConnectedToNetwork = this.networkProvider.isConnected();
-    this.restProvider.getResources().then(value =>
-      this.productsList = value['products']);
+    if(this.isConnectedToNetwork) {
+      this.restProvider.getResources().then(value =>
+        this.productsList = value['products']);
+      } else {
+        //TODO: get from local storage
+      }
   }
 
   public itemClicked(item): void {

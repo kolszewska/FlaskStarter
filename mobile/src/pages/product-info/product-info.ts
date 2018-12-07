@@ -27,19 +27,31 @@ export class ProductInfoPage {
     }
 
     public increaseQuantity(itemInfo, increaseAmount): void {
-        this.restProvider.increaseQuantity(itemInfo.id, increaseAmount).then(data => {
-            this.itemInfo.quantity = data['new_quantity'];
-        });
+        if (this.isConnectedToNetwork) {
+            this.restProvider.increaseQuantity(itemInfo.id, increaseAmount).then(data => {
+                this.itemInfo.quantity = data['new_quantity'];
+            });
+        } else {
+            // TODO: add operation to the stack
+        }
     }
 
     public decreaseQuantity(itemInfo, decreaseAmount): void {
-        this.restProvider.decreaseQuantity(itemInfo.id, decreaseAmount).then(data => {
-            this.itemInfo.quantity = data['new_quantity'];
-        });
+        if (this.isConnectedToNetwork) {
+            this.restProvider.decreaseQuantity(itemInfo.id, decreaseAmount).then(data => {
+                this.itemInfo.quantity = data['new_quantity'];
+            });
+        } else {
+            // TODO: add operation to the stack
+        }
     }
 
     public deleteProduct(itemInfo): void {
-        this.restProvider.deleteProduct(itemInfo.id);
-        this.navCtrl.push(ProductsExplorerPage);
+        if (this.isConnectedToNetwork) {
+            this.restProvider.deleteProduct(itemInfo.id);
+            this.navCtrl.push(ProductsExplorerPage);
+        } else {
+            //TODO: add operation to the  stack
+        }
     }
 }

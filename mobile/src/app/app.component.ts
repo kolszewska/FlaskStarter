@@ -22,14 +22,6 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
 
-      // this.deeplink.route({
-      //   '/': HomePage,
-      // }).subscribe( (match) => {      
-      //   alert(JSON.stringify(match.$args))
-      // }, (noMatch) => {
-      //   console.log("Deeplink did not match", noMatch);
-      // })
-
       deeplink.routeWithNavController(this.navChild, {
         '/:token': HomePage,
       }).subscribe((match) => {

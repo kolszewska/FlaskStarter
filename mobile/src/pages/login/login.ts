@@ -16,7 +16,8 @@ export class LoginPage {
     password: string;
     isConnectedToNetwork: boolean;
 
-    constructor(public navCtrl: NavController, public restProvider: RestProvider, public identityProvider: IdentityProvider, private networkProvider: NetworkProvider) {
+    constructor(public navCtrl: NavController, public restProvider: RestProvider, public identityProvider: IdentityProvider, 
+        private networkProvider: NetworkProvider) {
 
     }
 
@@ -25,9 +26,13 @@ export class LoginPage {
     }
 
     logIn() {
-        // this.restProvider.logIn(this.email, this.password).then(value => {
-        //     this.identityProvider.setUserIdentity(value['token'], this.email);
-            this.navCtrl.push(ProductsExplorerPage);
-        // });
+        if (this.isConnectedToNetwork) {
+            this.restProvider.logIn(this.email, this.password).then(value => {
+                this.identityProvider.setUserIdentity(value['token'], this.email);
+                this.navCtrl.push(ProductsExplorerPage);
+            });
+        } else {
+            // TODO: check if user is storred locally, save its token and proceed
+        }
     }
 }

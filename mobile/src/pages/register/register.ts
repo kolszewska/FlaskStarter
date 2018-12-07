@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
+
 import { RestProvider } from '../../providers/rest';
 import { IdentityProvider } from '../../providers/identity';
 import { LoginPage } from '../login/login';
@@ -17,7 +19,8 @@ export class RegisterPage {
     confirmPassword: string;
     isConnectedToNetwork: boolean;
 
-    constructor(public navCtrl: NavController, public restProvider: RestProvider, private identityProvider: IdentityProvider, private networkProvider: NetworkProvider) {
+    constructor(public navCtrl: NavController, public restProvider: RestProvider, private identityProvider: IdentityProvider, 
+        private networkProvider: NetworkProvider, private alertController: AlertController) {
 
     }
 
@@ -26,7 +29,17 @@ export class RegisterPage {
     }
 
     public register(): void {
-        this.restProvider.register(this.username, this.email, this.password);
-        this.navCtrl.push(LoginPage);
+        if(this.isConnectedToNetwork) {
+            this.restProvider.register(this.username, this.email, this.password);
+            this.navCtrl.push(LoginPage);
+        } else {
+            let alert = this.alertController.create({
+                title: 'Error!',
+                subTitle: 'Connect to inernet to be able to register!',
+                buttons: ['Ok']
+            });
+        
+            alert.present();
+        }
     }
 }
