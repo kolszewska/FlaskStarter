@@ -7,7 +7,7 @@ import { IdentityProvider } from './identity';
 @Injectable()
 export class RestProvider {
 
-  apiUrl = "http://192.168.56.1:5000/api";
+  apiUrl = "http://10.0.2.2:5000/api";
   oauth2Url = this.apiUrl + '/auth/oauth2';
 
   constructor(public http: HttpClient, private identityProvider: IdentityProvider) {

@@ -14,10 +14,13 @@ import { RegisterPage } from '../pages/register/register';
 import { LoginPage } from '../pages/login/login';
 import { ProductsExplorerPage } from '../pages/products-explorer/products-explorer';
 import { RestProvider } from '../providers/rest';
+import { StorageProvider } from '../providers/storage';
+import { NetworkProvider } from '../providers/network';
 import { ProductInfoPage } from '../pages/product-info/product-info';
 import { AddProductPage } from '../pages/add-product/add-product';
 import { IdentityProvider } from '../providers/identity';
-
+import { IonicStorageModule } from '@ionic/storage';
+import { Network } from '@ionic-native/network';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -37,6 +40,7 @@ export function tokenGetter() {
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -54,8 +58,11 @@ export function tokenGetter() {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     RestProvider,
     IdentityProvider,
+    StorageProvider,
+    NetworkProvider,
     Deeplinks,
     InAppBrowser,
+    Network,
     JwtHelperService
   ]
 })

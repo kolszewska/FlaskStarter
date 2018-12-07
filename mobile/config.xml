@@ -101,8 +101,9 @@
         <variable name="DEEPLINK_5_SCHEME" value=" " />
         <variable name="DEEPLINK_5_HOST" value=" " />
     </plugin>
+    <plugin name="cordova-sqlite-storage" spec="2.5.2" />
+    <plugin name="cordova-plugin-network-information" spec="2.0.1" />
     <engine name="android" spec="7.1.2" />
     <engine name="ios" spec="~4.5.5" />
     <engine name="browser" spec="5.0.4" />
-    <plugin name="cordova-sqlite-storage" spec="2.5.2" />
 </widget>

@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { RestProvider } from '../../providers/rest';
 import { IdentityProvider } from '../../providers/identity';
 import { LoginPage } from '../login/login';
+import { NetworkProvider } from '../../providers/network';
 
 @Component({
     selector: 'page-register',
@@ -14,12 +15,17 @@ export class RegisterPage {
     email: string;
     password: string;
     confirmPassword: string;
+    isConnectedToNetwork: boolean;
 
-    constructor(public navCtrl: NavController, public restProvider: RestProvider, private identityProvider: IdentityProvider) {
+    constructor(public navCtrl: NavController, public restProvider: RestProvider, private identityProvider: IdentityProvider, private networkProvider: NetworkProvider) {
 
     }
 
-    register() {
+    public ionViewDidEnter(): void {
+        this.isConnectedToNetwork = this.networkProvider.isConnected();
+    }
+
+    public register(): void {
         this.restProvider.register(this.username, this.email, this.password);
         this.navCtrl.push(LoginPage);
     }

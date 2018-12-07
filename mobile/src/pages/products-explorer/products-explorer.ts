@@ -5,6 +5,7 @@ import { ProductInfoPage } from '../product-info/product-info';
 import { AddProductPage } from '../add-product/add-product';
 import { RestProvider } from '../../providers/rest';
 import { IdentityProvider } from '../../providers/identity';
+import { NetworkProvider } from '../../providers/network';
 
 
 export class Product {
@@ -22,26 +23,27 @@ export class Product {
 export class ProductsExplorerPage {
 
   productsList: Array<Product>;
+  isConnectedToNetwork: boolean;
 
-  constructor(public navCtrl: NavController, public restProvider: RestProvider, private identityProvider: IdentityProvider) {
-
+  constructor(public navCtrl: NavController, public restProvider: RestProvider, private identityProvider: IdentityProvider, private networkProvider: NetworkProvider) {
   }
 
-  ionViewDidEnter() {
+  public ionViewDidEnter(): void {
+    this.isConnectedToNetwork = this.networkProvider.isConnected();
     this.restProvider.getResources().then(value =>
       this.productsList = value['products']);
   }
 
-  itemClicked(item): void {
+  public itemClicked(item): void {
     this.navCtrl.push(ProductInfoPage, item);
   }
 
 
-  addNewProduct() {
+  public addNewProduct(): void {
     this.navCtrl.push(AddProductPage);
   }
 
-  logOut() {
+  public logOut(): void {
     this.restProvider.logOut();
     this.identityProvider.deleteIdentity();
     this.navCtrl.push(HomePage);

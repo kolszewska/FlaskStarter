@@ -2,7 +2,6 @@
 from flask_jwt_extended import create_access_token
 
 import resourcemanager.repositories.users as users_repository
-import resourcemanager.repositories.tokens as tokens_repository
 from resourcemanager.database.models import User
 from resourcemanager.api.exceptions import InvalidArgumentsException
 

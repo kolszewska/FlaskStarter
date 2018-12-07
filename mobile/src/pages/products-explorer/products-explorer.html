@@ -4,6 +4,9 @@
             Products
         </ion-title>
         <ion-buttons end>
+            <button ion-button icon-only>
+                <ion-icon [color]="this.isConnectedToNetwork ? 'light' : 'danger'" name="sync"></ion-icon>
+            </button>
             <button ion-button icon-only (click)="addNewProduct()">
                 <ion-icon md="md-add"></ion-icon>
             </button>
@@ -13,7 +16,6 @@
         </ion-buttons>
     </ion-navbar>
 </ion-header>
-
 
 <ion-content padding>
     <ion-list>

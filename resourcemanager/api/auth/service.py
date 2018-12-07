@@ -7,8 +7,7 @@ from flask_restplus import Resource
 
 from resourcemanager.api import api
 from resourcemanager.api.auth import serializers
-from resourcemanager.api.auth.business import add_user, generate_access_token_for_user, log_in_user, \
-    add_token_to_blacklist, get_user_with_email
+from resourcemanager.api.auth.business import add_user, generate_access_token_for_user, log_in_user, get_user_with_email
 
 auth_ns = api.namespace('auth', description='Operations related to authorization.')
 
@@ -31,7 +30,7 @@ def handle_oauth2_authorization(remote, token, user_info):
     if token:
         user = get_user_with_email(user_info['email'])
         access_token = generate_access_token_for_user(user.username, user.is_admin)
-        return redirect('warehouse://ionic-warehouse.com/?token=' + access_token)
+        return redirect('warehouse://ionic-warehouse.com/?token={}?email={}'.format(access_token, user_info['email']))
 
 
 @auth_ns.route('/register')

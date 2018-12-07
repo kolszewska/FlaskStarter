@@ -1,6 +1,11 @@
 <ion-header>
     <ion-navbar color="primary">
         <ion-title>{{itemInfo.manufacturer_name}} {{itemInfo.model_name}}</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only>
+                <ion-icon [color]="this.isConnectedToNetwork ? 'light' : 'danger'" name="sync"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 

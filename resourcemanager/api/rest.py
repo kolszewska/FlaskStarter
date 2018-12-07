@@ -10,7 +10,6 @@ from resourcemanager.api.auth.service import auth_ns, handle_oauth2_authorizatio
 from resourcemanager.api.users.service import users_ns
 from resourcemanager.api.resources.service import resources_ns
 from resourcemanager.database import session, init_db
-from resourcemanager.repositories.tokens import is_jti_blacklisted
 
 # Definition of application
 app = Flask(__name__)

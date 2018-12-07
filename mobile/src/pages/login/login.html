@@ -1,6 +1,11 @@
 <ion-header>
     <ion-navbar>
         <ion-title>Log in</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only>
+                <ion-icon [color]="this.isConnectedToNetwork ? 'light' : 'danger'" name="sync"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 

@@ -16,7 +16,7 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, public restProvider: RestProvider, private inAppBrowser: InAppBrowser, private navParams: NavParams, public identityProvider: IdentityProvider) {
     if (navParams.get('token')) {
-      this.identityProvider.setUserIdentity(navParams.get('token'));
+      this.identityProvider.setUserIdentity(navParams.get('token'), navParams.get('email'));
       this.navCtrl.push(ProductsExplorerPage);
     }  
   }
