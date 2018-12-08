@@ -13,3 +13,7 @@ sign_in = api.model('Sign in', {
     'email': fields.String(required=True),
     'password': fields.String(required=True),
 })
+
+change_to_admin = api.model('Make user admin', {
+    'email': fields.String(required=True),
+})

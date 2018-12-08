@@ -30,6 +30,7 @@ export class ProductsExplorerPage {
       this.restProvider.getResources().then((value) => {
         this.productsList = value['products']
         this.storageProvider.saveResources(this.productsList);
+        console.log(this.productsList);
       });
       } else {
         console.log("Products-Explorer | Get products from local storage");

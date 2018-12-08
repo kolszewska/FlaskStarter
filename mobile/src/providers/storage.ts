@@ -56,4 +56,47 @@ export class StorageProvider {
       })
     })
   }
+
+  public increaseLocalQuantity(productId: string, quantityChange: number): Promise<any> {
+    console.log("StorageProvider | Increase Quantity for product with id: " + productId);
+      return new Promise((resolve) => {
+        this.storage.get('productsList').then((data) => {
+          var productIndex = data.findIndex(product => product.id == productId);
+          var productToBeUpdated = data[productIndex];
+          productToBeUpdated.quantity = +productToBeUpdated.quantity + +quantityChange;
+          data[productId] = productToBeUpdated;
+          this.storage.set('productsList', data);
+          // TODO: add operation to list of operations
+          resolve(productToBeUpdated.quantity);
+      })
+    })
+  }
+
+  public decreeaseLocalQuantity(productId: string, quantityChange: number): Promise<any> {
+    console.log("StorageProvider | Decrease Quantity for product with id: " + productId);
+      return new Promise((resolve) => {
+        this.storage.get('productsList').then((data) => {
+          var productIndex = data.findIndex(product => product.id == productId);
+          var productToBeUpdated = data[productIndex];
+          if(+productToBeUpdated.quantity - +quantityChange >= 0) {
+            productToBeUpdated.quantity = +productToBeUpdated.quantity - +quantityChange;
+            data[productId] = productToBeUpdated;
+            this.storage.set('productsList', data);
+            // TODO: add operation to list of operations
+            resolve(productToBeUpdated.quantity);
+          }
+          resolve(productToBeUpdated.quantity);
+      })
+    })
+  }
+
+  public removeLocally(productId: string): void {
+    console.log("StorageProvider | Remove product with id: " + productId);
+    this.storage.get('productsList').then((data => {
+      var productIndex = data.findIndex(product => product.id == productId);
+      delete data[productIndex];
+      this.storage.set('productsList', data);
+      // TODO: add operation to list of operations
+    }));
+  }
 }

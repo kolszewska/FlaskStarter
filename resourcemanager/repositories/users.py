@@ -15,6 +15,13 @@ def add_user(username: str, email: str, password: str) -> int:
     return user.id
 
 
+def make_admin(email: str) -> None:
+    with db_session() as session:
+        user = get_user_by_email(email)
+        user.is_admin = True
+        session.commit()
+
+
 def get_user_by_email(email: str) -> User:
     """Get User for given email."""
     return User.query.filter_by(email=email).first()

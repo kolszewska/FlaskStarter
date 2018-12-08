@@ -23,7 +23,7 @@ export class ProductInfoPage {
 
     public ionViewDidEnter(): void {
         this.isConnectedToNetwork = this.networkProvider.isConnected();
-        this.canDelete = this.identityProvider.isUserAdmin();
+        this.canDelete = true;
         console.log('ionViewDidEnter InfoPage');
     }
 
@@ -33,7 +33,9 @@ export class ProductInfoPage {
                 this.itemInfo.quantity = data['new_quantity'];
             });
         } else {
-            // TODO: add operation to the stack
+            this.storageProvider.increaseLocalQuantity(itemInfo.id, increaseAmount).then(data=> {
+                this.itemInfo.quantity = data;
+            });
         }
     }
 
@@ -43,16 +45,20 @@ export class ProductInfoPage {
                 this.itemInfo.quantity = data['new_quantity'];
             });
         } else {
-            // TODO: add operation to the stack
+            this.storageProvider.decreeaseLocalQuantity(itemInfo.id, decreaseAmount).then(data=> {
+                this.itemInfo.quantity = data;
+            });
         }
     }
 
     public deleteProduct(itemInfo): void {
         if (this.isConnectedToNetwork) {
             this.restProvider.deleteProduct(itemInfo.id);
+            this.storageProvider.removeLocally(itemInfo.id);
             this.navCtrl.push(ProductsExplorerPage);
         } else {
-            //TODO: add operation to the  stack
+            this.storageProvider.removeLocally(itemInfo.id);
+            this.navCtrl.push(ProductsExplorerPage);
         }
     }
 }

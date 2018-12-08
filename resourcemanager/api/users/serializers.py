@@ -11,3 +11,7 @@ user = api.model('User', {
 users_list = api.model('Users list', {
     'users': fields.List(fields.Nested(user)),
 })
+
+change_to_admin = api.model('Make user admin', {
+    'email': fields.String(required=True),
+})
