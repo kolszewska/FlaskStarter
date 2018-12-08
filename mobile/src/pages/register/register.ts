@@ -38,7 +38,6 @@ export class RegisterPage {
                 subTitle: 'Connect to inernet to be able to register!',
                 buttons: ['Ok']
             });
-        
             alert.present();
         }
     }

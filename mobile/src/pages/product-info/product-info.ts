@@ -4,6 +4,7 @@ import { IdentityProvider } from '../../providers/identity';
 import { RestProvider } from '../../providers/rest';
 import { ProductsExplorerPage } from '../products-explorer/products-explorer';
 import { NetworkProvider } from '../../providers/network';
+import { StorageProvider } from '../../providers/storage';
 
 @Component({
     selector: 'page-product-info',
@@ -16,7 +17,7 @@ export class ProductInfoPage {
     public isConnectedToNetwork: boolean;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public restProvider: RestProvider, private identityProvider: IdentityProvider,
-        private networkProvider: NetworkProvider) {
+        private networkProvider: NetworkProvider, private storageProvider: StorageProvider) {
         this.itemInfo = this.navParams.data;
     }
 

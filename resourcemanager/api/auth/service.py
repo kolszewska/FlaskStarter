@@ -69,6 +69,4 @@ class LogOut(Resource):
     @auth_ns.doc(responses={200: 'User was successfully logged out.'})
     def post() -> Any:
         """Endpoint for User log out."""
-        jti = get_raw_jwt()['jti']
-        add_token_to_blacklist(jti)
         return 200

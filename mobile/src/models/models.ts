@@ -7,3 +7,11 @@ export class UserTokenPair {
         this.token = token;
     }
   }
+
+export class Product {
+    id: number;
+    manufacturer_name: string;
+    model_name: string;
+    price: number;
+    quantity: number;
+}

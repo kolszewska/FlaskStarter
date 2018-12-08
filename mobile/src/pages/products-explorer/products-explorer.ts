@@ -6,15 +6,9 @@ import { AddProductPage } from '../add-product/add-product';
 import { RestProvider } from '../../providers/rest';
 import { IdentityProvider } from '../../providers/identity';
 import { NetworkProvider } from '../../providers/network';
+import { Product } from '../../models/models'; 
+import { StorageProvider } from '../../providers/storage';
 
-
-export class Product {
-    id: number;
-    manufacturer_name: string;
-    model_name: string;
-    price: number;
-    quantity: number;
-}
 
 @Component({
   selector: 'page-products-explorer',
@@ -25,16 +19,20 @@ export class ProductsExplorerPage {
   productsList: Array<Product>;
   isConnectedToNetwork: boolean;
 
-  constructor(public navCtrl: NavController, public restProvider: RestProvider, private identityProvider: IdentityProvider, private networkProvider: NetworkProvider) {
+  constructor(public navCtrl: NavController, public restProvider: RestProvider, private identityProvider: IdentityProvider,
+     private networkProvider: NetworkProvider, private storageProvider: StorageProvider) {
   }
 
   public ionViewDidEnter(): void {
     this.isConnectedToNetwork = this.networkProvider.isConnected();
     if(this.isConnectedToNetwork) {
+      console.log("Products-Explorer | Get products from server");
       this.restProvider.getResources().then(value =>
         this.productsList = value['products']);
       } else {
-        //TODO: get from local storage
+        console.log("Products-Explorer | Get products from local storage");
+        this.productsList = this.storageProvider.getResources();
+        console.log(this.productsList);
       }
   }
 
