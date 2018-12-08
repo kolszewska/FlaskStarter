@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { isUndefined } from 'ionic-angular/util/util';
 
 import {UserTokenPair, Product} from '../models/models'
-import { isRightSide } from 'ionic-angular/umd/util/util';
 
 
 @Injectable()
@@ -13,7 +13,7 @@ export class StorageProvider {
   }
 
   public saveTokenUserPair(email: string, token: string): void {
-      console.log("StorageProvider | save user-token pair " + email)
+      console.log("StorageProvider | Save user-token pair with email: " + email);
       this.storage.get('userTokenPairList').then((data => {
         var listOfUserTokenPairs;
         data == null ? listOfUserTokenPairs = [] : listOfUserTokenPairs = data;
@@ -24,7 +24,7 @@ export class StorageProvider {
   }
 
   public returnTokenForUser(email: string) : Promise<any> {
-    console.log("StorageProvider | get token for user | " + email)
+    console.log("StorageProvider | Get token for user with email: " + email);
     return new Promise((resolve) => {
       this.storage.get('userTokenPairList').then((data) => {
         if(data == null) {return null;}
@@ -39,11 +39,21 @@ export class StorageProvider {
     })
   }
 
-  public getResources(): Array<Product> {
-    console.log("StorageProvider | get list of products");
-    this.storage.get('listOfProducts').then((val => {
-      return val;
-    }))
-    return [];
+  public saveResources(productList: Array<Product>): void {
+      console.log("StorageProvider | Saving products locally on device");
+      console.log(productList);
+      this.storage.set('productsList', productList);
+  }
+
+  public getResources(): Promise<Array<Product>> {
+    console.log("StorageProvider | Get list of products from local storage");
+    return new Promise((resolve) => {
+      this.storage.get('productsList').then((data) => {
+        if(data == null) {return null;}
+        resolve(data);
+      }).catch((err) => {
+        console.log(err);
+      })
+    })
   }
 }

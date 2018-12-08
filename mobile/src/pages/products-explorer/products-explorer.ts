@@ -27,12 +27,15 @@ export class ProductsExplorerPage {
     this.isConnectedToNetwork = this.networkProvider.isConnected();
     if(this.isConnectedToNetwork) {
       console.log("Products-Explorer | Get products from server");
-      this.restProvider.getResources().then(value =>
-        this.productsList = value['products']);
+      this.restProvider.getResources().then((value) => {
+        this.productsList = value['products']
+        this.storageProvider.saveResources(this.productsList);
+      });
       } else {
         console.log("Products-Explorer | Get products from local storage");
-        this.productsList = this.storageProvider.getResources();
-        console.log(this.productsList);
+        this.storageProvider.getResources().then((products) => {
+          this.productsList = products;
+        });
       }
   }
 
