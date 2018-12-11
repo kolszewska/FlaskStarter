@@ -8,6 +8,7 @@ import { IdentityProvider } from '../../providers/identity';
 import { NetworkProvider } from '../../providers/network';
 import { Product } from '../../models/models'; 
 import { StorageProvider } from '../../providers/storage';
+import { isUndefined } from 'ionic-angular/util/util';
 
 
 @Component({
@@ -30,12 +31,11 @@ export class ProductsExplorerPage {
       this.restProvider.getResources().then((value) => {
         this.productsList = value['products']
         this.storageProvider.saveResources(this.productsList);
-        console.log(this.productsList);
       });
       } else {
         console.log("Products-Explorer | Get products from local storage");
         this.storageProvider.getResources().then((products) => {
-          this.productsList = products;
+            this.productsList = products;
         });
       }
   }

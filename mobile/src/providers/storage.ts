@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { isUndefined } from 'ionic-angular/util/util';
 
 import {UserTokenPair, Product} from '../models/models'
 
@@ -21,6 +20,16 @@ export class StorageProvider {
         listOfUserTokenPairs.push(userTokenPair);
         this.storage.set('userTokenPairList', listOfUserTokenPairs);
       }));
+  }
+
+
+  public deleteTokenUserPair(token: string): void {
+    console.log("StorageProvider | Delete user-token pair");
+    this.storage.get('userTokenPairList').then((data => {
+      var userIndex = data.findIndex(userTokenPair => userTokenPair.token == token);
+      delete data[userIndex];
+      this.storage.set('userTokenPairList', data);
+    }));
   }
 
   public returnTokenForUser(email: string) : Promise<any> {
@@ -47,9 +56,8 @@ export class StorageProvider {
 
   public getResources(): Promise<Array<Product>> {
     console.log("StorageProvider | Get list of products from local storage");
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       this.storage.get('productsList').then((data) => {
-        if(data == null) {return null;}
         resolve(data);
       }).catch((err) => {
         console.log(err);
@@ -95,6 +103,21 @@ export class StorageProvider {
     this.storage.get('productsList').then((data => {
       var productIndex = data.findIndex(product => product.id == productId);
       delete data[productIndex];
+      this.storage.set('productsList', data);
+      // TODO: add operation to list of operations
+    }));
+  }
+
+  public addLocally(manufacturerName: string, modelName: string, price: number): void {
+    console.log("StorageProvider | Add new product");
+    this.storage.get('productsList').then((data => {
+      const lastId = data(data[data.length-1]).id;
+      var newProduct = new Product(manufacturerName, modelName, price, 0);
+      newProduct.id = lastId + 1;
+      data.push(newProduct);
+      data.array.forEach(element => {
+        console.log(element);
+      });
       this.storage.set('productsList', data);
       // TODO: add operation to list of operations
     }));

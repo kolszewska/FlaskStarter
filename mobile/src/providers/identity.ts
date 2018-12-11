@@ -36,5 +36,6 @@ export class IdentityProvider {
   public deleteIdentity(): void {
     this._userToken = '';
     this._isUserAdmin = '';
+    this.storageProvider.deleteTokenUserPair(this._userToken);
   }
 }

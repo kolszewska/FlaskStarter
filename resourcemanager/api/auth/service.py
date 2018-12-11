@@ -7,7 +7,7 @@ from flask_restplus import Resource
 
 from resourcemanager.api import api
 from resourcemanager.api.auth import serializers
-from resourcemanager.api.auth.business import add_user, generate_access_token_for_user, log_in_user, get_user_with_email, make_admin
+from resourcemanager.api.auth.business import add_user, generate_access_token_for_user, log_in_user, get_user_with_email
 
 auth_ns = api.namespace('auth', description='Operations related to authorization.')
 
@@ -70,18 +70,3 @@ class LogOut(Resource):
     def post() -> Any:
         """Endpoint for User log out."""
         return 200
-
-
-@auth_ns.route('/admin')
-class Admin(Resource):
-
-    @staticmethod
-    @jwt_required
-    @auth_ns.doc(security='token')
-    @api.expect(serializers.change_to_admin)
-    def post() -> Any:
-        """Endpoint for making user admin."""
-        change_to_admin = request.json
-        email = change_to_admin["email"]
-        make_admin(email)
-        return 201

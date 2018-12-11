@@ -30,6 +30,8 @@ export class AddProductPage {
             this.restProvider.addResource(this.manufacturerName, this.modelName, this.price);
             this.navCtrl.push(ProductsExplorerPage);
         } else {
+            this.storageProvider.addLocally(this.manufacturerName, this.modelName, this.price)
+            this.navCtrl.push(ProductsExplorerPage);
         }
     }
 }

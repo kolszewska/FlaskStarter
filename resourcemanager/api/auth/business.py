@@ -35,12 +35,3 @@ def log_in_user(email: str, password: str):
             return generate_access_token_for_user(user.username, user.is_admin)
         else:
             raise InvalidArgumentsException('E-mail or password is incorrect!')
-
-
-def make_admin(email: str):
-    """Make user admin."""
-    user = users_repository.get_user_by_email(email)
-    if not user:
-        raise InvalidArgumentsException('User with this e-mail does not exist!')
-    else:
-        users_repository.make_admin(email)

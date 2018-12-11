@@ -17,8 +17,8 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-    <ion-list>
+<ion-content padding *ngIf="productsList">
+    <ion-list>>
         <button clear ion-item *ngFor="let product of productsList" (click)="itemClicked(product)" details-push>
             {{product.manufacturer_name}} {{product.model_name}}
         </button>
