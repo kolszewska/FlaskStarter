@@ -11,17 +11,45 @@ export class StorageProvider {
     console.log('Hello StorageProvider Provider');
   }
 
-  private _operationList = [];
-
-  public getOperationsList(): Array<any> {
-    return this._operationList;
-  }
 
   // Possible operations:
-  // add_new { 'manufacturer_name': manufacturerName, 'model_name': modelName, 'price': price };
+  // add { 'manufacturer_name': manufacturerName, 'model_name': modelName, 'price': price };
   // remove ('id': id)
   // increase { 'amount': amount, 'id': id };
   // decreaase { 'amount': amount, 'id': id };
+
+  public getOperations(): Promise<any> {
+    console.log("StorageProvider | Get list of operations");
+    return new Promise((resolve) => {
+      this.storage.get('operationsList').then((data) => {
+        if(data == null) {
+          this.storage.set('operationsList', []);
+          resolve([]);
+        }
+        resolve(data);
+      }).catch((err) => {
+        console.log(err);
+      })
+    })
+  }
+
+  public clearOperationsListt() {
+    console.log("StorageProvider | Delete operations");
+    this.storage.get('operationsList').then((data => {
+      data = [];
+      this.storage.set('operationsList', data);
+    }));
+  }
+
+  public addOperation(operation: any) {
+    console.log("StorageProvider | Add new operation | " + operation["name"]);
+    this.getOperations().then((data) => {
+      var listOfOperations;
+      data == null ? listOfOperations = [] : listOfOperations = data;
+      listOfOperations.push(operation);
+      this.storage.set('operationsList', listOfOperations);
+    })
+  }
 
   public saveTokenUserPair(email: string, token: string): void {
       console.log("StorageProvider | Save user-token pair with email: " + email);
@@ -87,7 +115,7 @@ export class StorageProvider {
           data[productId] = productToBeUpdated;
           this.storage.set('productsList', data);
           // Adding to list of operations
-          this._operationList.push({'name': 'increase', 'amount': quantityChange, 'id': productId});
+          this.addOperation({'name': 'increase', 'amount': quantityChange, 'id': productId});
           resolve(productToBeUpdated.quantity);
       })
     })
@@ -104,7 +132,7 @@ export class StorageProvider {
             data[productId] = productToBeUpdated;
             this.storage.set('productsList', data);
             // Adding to list of operations
-            this._operationList.push({'name': 'decrease', 'amount': quantityChange, 'id': productId});
+            this.addOperation({'name': 'decrease', 'amount': quantityChange, 'id': productId});
             resolve(productToBeUpdated.quantity);
           }
           resolve(productToBeUpdated.quantity);
@@ -123,7 +151,7 @@ export class StorageProvider {
         data = data.splice(productIndex, 1)
       }
       // Adding to list of operations
-      this._operationList.push({'name': 'remove', 'id': productId});
+      this.addOperation({'name': 'remove', 'id': productId});
       this.storage.set('productsList', data);
     }));
   }
@@ -141,7 +169,7 @@ export class StorageProvider {
       var newProduct = new Product(newId, manufacturerName, modelName, Number(price), 0);
       data.push(newProduct);
       // Adding to list of operations
-      this._operationList.push({'name': 'add', 'manufacturer_name': manufacturerName, 'model_name': modelName, 'price': price});
+      this.addOperation({'name': 'add', 'manufacturer_name': manufacturerName, 'model_name': modelName, 'price': price});
       this.storage.set('productsList', data);
     }));
   }

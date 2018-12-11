@@ -14,6 +14,42 @@ export class RestProvider {
     console.log('Hello RestProvider Provider');
   }
 
+
+  public synchronizeWithServer(operationsList: any[]) {
+    return new Promise(resolve => {
+        operationsList.forEach(operation => {
+        var name = operation["name"];
+        switch(name) {
+          case "add": {
+            console.log("RestProvider | Synchronization | Add product");
+            this.addResource(operation["manufacturer_name"], operation["model_name"], operation["price"]);
+            break;
+          }
+          case "remove": {
+            console.log("RestProvider | Synchronization | Remove product");
+            this.deleteProduct(operation["id"]);
+            break;
+          }
+          case "increase": {
+            console.log("RestProvider | Synchronization | Increase quantity");
+            this.increaseQuantity(operation["id"], operation["amount"]);
+            break;
+          }
+          case "decrease": {
+            console.log("RestProvider | Synchronization | Decrease quantity");
+            this.decreaseQuantity(operation["id"], operation["amount"]);
+            break;
+          }
+          default: {
+            console.log("RestProvider | Synchronization | Operation not recognized");
+          }
+        }
+      })
+      resolve(true);
+    });
+  }
+
+
   logIn(email: string, password: string) {
     let body = { 'email': email, 'password': password };
     return new Promise(resolve => {
@@ -63,6 +99,7 @@ export class RestProvider {
   }
 
   addResource(manufacturerName: string, modelName: string, price: number) {
+    console.log(manufacturerName + modelName + price);
     let body = { 'manufacturer_name': manufacturerName, 'model_name': modelName, 'price': price };
     return new Promise(resolve => {
       this.http.post(this.apiUrl + '/resources/add_product', body, {

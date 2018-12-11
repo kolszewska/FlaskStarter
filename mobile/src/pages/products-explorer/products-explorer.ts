@@ -8,6 +8,7 @@ import { IdentityProvider } from '../../providers/identity';
 import { NetworkProvider } from '../../providers/network';
 import { Product } from '../../models/models'; 
 import { StorageProvider } from '../../providers/storage'
+import { LoadingController } from 'ionic-angular';
 
 
 @Component({
@@ -18,9 +19,10 @@ export class ProductsExplorerPage {
 
   productsList: Array<Product>;
   isConnectedToNetwork: boolean;
+  syncing: any;
 
   constructor(public navCtrl: NavController, public restProvider: RestProvider, private identityProvider: IdentityProvider,
-     private networkProvider: NetworkProvider, private storageProvider: StorageProvider) {
+     private networkProvider: NetworkProvider, private storageProvider: StorageProvider, public loadingController: LoadingController) {
   }
 
   public ionViewWillEnter(): void {
@@ -34,14 +36,24 @@ export class ProductsExplorerPage {
       } else {
         console.log("Products-Explorer | Get products from local storage");
         this.storageProvider.getResources().then((products) => {
-            console.log(products.length);
             products.forEach(element => {
               console.log(element);
             });
             this.productsList = products;
         });
       }
-      console.log(this.storageProvider.getOperationsList());
+  }
+
+  public sync(): void {
+    console.log("Products-Explorer | Try to synchronize with server");
+    this.syncing = this.loadingController.create({ content: "Syncing with server, please wait..." });
+    this.syncing.present();
+    this.storageProvider.getOperations().then(operations => {
+      this.restProvider.synchronizeWithServer(operations).then((result) => {
+        this.syncing.dismissAll();
+        this.storageProvider.clearOperationsListt();
+      });
+    })
   }
 
   public itemClicked(item): void {

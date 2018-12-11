@@ -4,7 +4,7 @@
             Products
         </ion-title>
         <ion-buttons end>
-            <button ion-button icon-only>
+            <button ion-button icon-only (click)="sync()">
                 <ion-icon [color]="this.isConnectedToNetwork ? 'light' : 'danger'" name="sync"></ion-icon>
             </button>
             <button ion-button icon-only (click)="addNewProduct()">
