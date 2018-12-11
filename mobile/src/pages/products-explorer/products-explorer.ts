@@ -7,8 +7,7 @@ import { RestProvider } from '../../providers/rest';
 import { IdentityProvider } from '../../providers/identity';
 import { NetworkProvider } from '../../providers/network';
 import { Product } from '../../models/models'; 
-import { StorageProvider } from '../../providers/storage';
-import { isUndefined } from 'ionic-angular/util/util';
+import { StorageProvider } from '../../providers/storage'
 
 
 @Component({
@@ -24,7 +23,7 @@ export class ProductsExplorerPage {
      private networkProvider: NetworkProvider, private storageProvider: StorageProvider) {
   }
 
-  public ionViewDidEnter(): void {
+  public ionViewWillEnter(): void {
     this.isConnectedToNetwork = this.networkProvider.isConnected();
     if(this.isConnectedToNetwork) {
       console.log("Products-Explorer | Get products from server");
@@ -35,9 +34,14 @@ export class ProductsExplorerPage {
       } else {
         console.log("Products-Explorer | Get products from local storage");
         this.storageProvider.getResources().then((products) => {
+            console.log(products.length);
+            products.forEach(element => {
+              console.log(element);
+            });
             this.productsList = products;
         });
       }
+      console.log(this.storageProvider.getOperationsList());
   }
 
   public itemClicked(item): void {
