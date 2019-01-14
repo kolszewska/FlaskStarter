@@ -67,7 +67,7 @@ export class StorageProvider {
     console.log("StorageProvider | Delete user-token pair");
     this.storage.get('userTokenPairList').then((data => {
       var userIndex = data.findIndex(userTokenPair => userTokenPair.token == token);
-      data = data.splice(userIndex, 1)
+      data.splice(userIndex, 1)
       this.storage.set('userTokenPairList', data);
     }));
   }
@@ -148,7 +148,7 @@ export class StorageProvider {
         data = [];
       } else {
         var productIndex = data.findIndex(product => product.id == productId);
-        data = data.splice(productIndex, 1)
+        data.splice(productIndex, 1)
       }
       // Adding to list of operations
       this.addOperation({'name': 'remove', 'id': productId});
