@@ -8,7 +8,7 @@ from flask_restplus import Resource
 from resourcemanager.api import api
 from resourcemanager.api.resources import serializers
 from resourcemanager.api.resources.business import add_new_product, increase_product_quantity, \
-    decrease_product_quantity, remove_product, get_all_products
+    decrease_product_quantity, remove_product, get_all_products, try_to_sync
 
 resources_ns = api.namespace('resources', description='Operations related to resources.')
 
@@ -91,3 +91,19 @@ class DecreaseProductQuantity(Resource):
         data = request.json
         new_quantity = decrease_product_quantity(product_id, int(data['amount']))
         return {'new_quantity': new_quantity}, 200
+
+
+@resources_ns.route('/sync')
+class Sync(Resource):
+
+    @staticmethod
+    @resources_ns.doc(security='token')
+    @resources_ns.doc(responses={200: 'Successfully synced.'})
+    @resources_ns.marshal_with(serializers.operations_list)
+    def post() -> Any:
+        data = request.json
+        operations = data['operations']
+        operation_id = data['id']
+        print(operations)
+        print(operation_id)
+        try_to_sync(operations, operation_id)

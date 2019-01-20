@@ -24,3 +24,8 @@ product = api.model('Product', {
 products_list = api.model('Products list', {
     'products': fields.List(fields.Nested(product)),
 })
+
+operations_list = api.model('Operations list', {
+    'operations': fields.List(fields.Nested(any)),
+    'id': fields.String(required=True),
+})

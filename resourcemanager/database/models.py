@@ -45,3 +45,13 @@ class Product(Base):
         self.model_name = model_name
         self.price = price
         self.quantity = quantity
+
+
+class Operation(Base):
+    """Defines model for the Operation"""
+    __tablename__ = 'operations'
+    id = Column(String, primary_key=True)
+
+    def __init__(self, operation_id) -> None:
+        """Initialize Operation"""
+        self.id = operation_id

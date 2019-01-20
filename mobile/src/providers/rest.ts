@@ -1,5 +1,9 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {Observable } from 'rxjs';
+import {_throw} from 'rxjs/observable/throw';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {concat, delay, map, retryWhen, take} from 'rxjs/operators';
+import {of} from 'rxjs/observable/of';
 
 import { IdentityProvider } from './identity';
 
@@ -10,44 +14,39 @@ export class RestProvider {
   apiUrl = "http://10.0.2.2:5000/api";
   oauth2Url = this.apiUrl + '/auth/oauth2';
 
+  uuidv1 = require('uuid/v1');
+
   constructor(public http: HttpClient, private identityProvider: IdentityProvider) {
     console.log('Hello RestProvider Provider');
   }
 
-
-  public synchronizeWithServer(operationsList: any[]) {
-    return new Promise(resolve => {
-        operationsList.forEach(operation => {
-        var name = operation["name"];
-        switch(name) {
-          case "add": {
-            console.log("RestProvider | Synchronization | Add product");
-            this.addResource(operation["manufacturer_name"], operation["model_name"], operation["price"]);
-            break;
-          }
-          case "remove": {
-            console.log("RestProvider | Synchronization | Remove product");
-            this.deleteProduct(operation["id"]);
-            break;
-          }
-          case "increase": {
-            console.log("RestProvider | Synchronization | Increase quantity");
-            this.increaseQuantity(operation["id"], operation["amount"]);
-            break;
-          }
-          case "decrease": {
-            console.log("RestProvider | Synchronization | Decrease quantity");
-            this.decreaseQuantity(operation["id"], operation["amount"]);
-            break;
-          }
-          default: {
-            console.log("RestProvider | Synchronization | Operation not recognized");
-          }
-        }
-      })
-      resolve(true);
+  synchronizeWithServer(operationsList: any[]) {
+    return new Promise((resolve, reject) => {
+        let body = { 'operations': operationsList, 'id': this.uuidv1() };
+        let retryAttempt = 0;
+        this.http.post(this.apiUrl + '/resources/sync', body, { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.identityProvider.getUserToken()) })
+            .pipe(
+                retryWhen((error: Observable<HttpErrorResponse>) => {
+                    return error.pipe(
+                        map((scanRequestError: HttpErrorResponse) => {
+                            console.warn('Retrying request for syncing (attempt: ' + (++retryAttempt) + ').');
+                            return of(scanRequestError.status);
+                        }),
+                        delay(5000), // Let's give it a try after 5 seconds
+                        take(5), // Let's give it 5 retries (each after 5 seconds)
+                        concat(_throw({error: 'Unable to sync.'}))
+                    );
+                })
+            ).toPromise().then(
+            (response: any) => {
+                resolve(response);
+            },
+            (error: HttpErrorResponse) => {
+                reject(error);
+            }
+        );
     });
-  }
+}
 
 
   logIn(email: string, password: string) {

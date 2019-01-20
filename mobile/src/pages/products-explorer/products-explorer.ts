@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { ProductInfoPage } from '../product-info/product-info';
 import { AddProductPage } from '../add-product/add-product';
@@ -21,7 +21,7 @@ export class ProductsExplorerPage {
   isConnectedToNetwork: boolean;
   syncing: any;
 
-  constructor(public navCtrl: NavController, public restProvider: RestProvider, private identityProvider: IdentityProvider,
+  constructor(public navCtrl: NavController, public restProvider: RestProvider, private identityProvider: IdentityProvider, private alertController: AlertController,
      private networkProvider: NetworkProvider, private storageProvider: StorageProvider, public loadingController: LoadingController) {
   }
 
@@ -49,10 +49,22 @@ export class ProductsExplorerPage {
     this.syncing = this.loadingController.create({ content: "Syncing with server, please wait..." });
     this.syncing.present();
     this.storageProvider.getOperations().then(operations => {
-      this.restProvider.synchronizeWithServer(operations).then((result) => {
+      this.restProvider.synchronizeWithServer(operations).then(result => {
+        console.log("Products-Explorer | Sync was succesfull!")
+          this.syncing.dismissAll();
+          this.storageProvider.clearOperationsListt();
+      }).catch(err => {
         this.syncing.dismissAll();
-        this.storageProvider.clearOperationsListt();
-      });
+        let alert = this.alertController.create({
+          title: 'Error!',
+          subTitle: 'Unable to synchronize with server! Try later',
+          buttons: ['Ok']
+      });        
+        alert.present();
+        console.log(err)
+      })
+    }).catch(err => {
+      console.log(err)
     })
   }
 

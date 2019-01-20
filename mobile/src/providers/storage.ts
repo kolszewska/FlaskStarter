@@ -11,7 +11,6 @@ export class StorageProvider {
     console.log('Hello StorageProvider Provider');
   }
 
-
   // Possible operations:
   // add { 'manufacturer_name': manufacturerName, 'model_name': modelName, 'price': price };
   // remove ('id': id)
